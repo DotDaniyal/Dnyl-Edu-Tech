@@ -3,6 +3,7 @@ import { LastVisitedLesson, UserPreferences, ContactSubmission } from '../types/
 export const STORAGE_KEYS = {
   USER: 'daniyal_edu_user',
   THEME: 'daniyal_edu_theme',
+  LANGUAGE: 'daniyal_edu_language',
   PROGRESS: 'daniyal_edu_progress',
   COURSES: 'daniyal_edu_courses',
   LESSONS: 'daniyal_edu_lessons',
@@ -15,6 +16,7 @@ export const STORAGE_KEYS = {
   SEARCH_HISTORY: 'daniyal_edu_search_history',
   CONTACT_MESSAGES: 'daniyal_edu_contact_messages',
   CODE_DRAFTS: 'daniyal_edu_code_drafts',
+  HIDE_CONTINUE_BANNER: 'daniyal_edu_hide_continue_banner',
 } as const;
 
 export function safeGetItem<T>(key: string, fallback: T): T {
@@ -40,8 +42,15 @@ export function safeSetItem<T>(key: string, value: T): boolean {
 }
 
 export function getTheme(): 'dark' | 'light' {
-  const stored = safeGetItem<string>(STORAGE_KEYS.THEME, 'dark');
-  return stored === 'light' ? 'light' : 'dark';
+  const stored = safeGetItem<string>(STORAGE_KEYS.THEME, '');
+  if (stored === 'light' || stored === 'dark') {
+    return stored;
+  }
+  // Check system preference if not set
+  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    return 'light';
+  }
+  return 'dark';
 }
 
 export function setTheme(theme: 'dark' | 'light'): void {
@@ -54,6 +63,15 @@ export function setTheme(theme: 'dark' | 'light'): void {
       root.classList.remove('dark');
     }
   }
+}
+
+export function getLanguage(): 'en' | 'ur' {
+  const stored = safeGetItem<string>(STORAGE_KEYS.LANGUAGE, 'en');
+  return stored === 'ur' ? 'ur' : 'en';
+}
+
+export function setLanguage(lang: 'en' | 'ur'): void {
+  safeSetItem(STORAGE_KEYS.LANGUAGE, lang);
 }
 
 export function getCompletedLessons(): string[] {
@@ -203,4 +221,12 @@ export function saveContactSubmission(submission: Omit<ContactSubmission, 'id' |
   };
   safeSetItem(STORAGE_KEYS.CONTACT_MESSAGES, [entry, ...current]);
   return entry;
+}
+
+export function getHideContinueBanner(): boolean {
+  return safeGetItem<boolean>(STORAGE_KEYS.HIDE_CONTINUE_BANNER, false);
+}
+
+export function setHideContinueBanner(hidden: boolean): void {
+  safeSetItem(STORAGE_KEYS.HIDE_CONTINUE_BANNER, hidden);
 }

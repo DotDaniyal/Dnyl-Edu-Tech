@@ -1,3 +1,8 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -11,15 +16,18 @@ import {
   RotateCcw,
   Sparkles,
   Terminal,
+  X,
+  EyeOff,
 } from 'lucide-react';
 import { DANIYAL_IDENTITY } from '../data/daniyalData';
+import { AppLanguage, TRANSLATIONS } from '../data/translations';
 import { LastVisitedLesson } from '../types/edu';
+import { setHideContinueBanner } from '../lib/storage';
 import { TextReveal } from './animations/TextReveal';
 import { MagneticButton } from './animations/MagneticButton';
 import { TiltCard } from './animations/TiltCard';
 import { FloatingElement } from './animations/FloatingElement';
 import { FadeIn } from './animations/FadeIn';
-import { StaggerContainer, StaggerItem } from './animations/StaggerContainer';
 import { ShimmerText } from './animations/Shimmer';
 
 interface HeroSectionProps {
@@ -27,6 +35,10 @@ interface HeroSectionProps {
   onExploreCourses: () => void;
   lastVisitedLesson: LastVisitedLesson | null;
   onContinueLesson: (courseId: string, lessonId: string) => void;
+  language?: AppLanguage;
+  hideContinueBanner?: boolean;
+  onDismissContinueBanner?: () => void;
+  onDontShowAgainContinueBanner?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -34,12 +46,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onExploreCourses,
   lastVisitedLesson,
   onContinueLesson,
+  language = 'en',
+  hideContinueBanner = false,
+  onDismissContinueBanner,
+  onDontShowAgainContinueBanner,
 }) => {
+  const t = TRANSLATIONS[language];
   const [activeTerminalTab, setActiveTerminalTab] = useState<'code' | 'internals' | 'romanUrdu'>('code');
   const [terminalOutput, setTerminalOutput] = useState<string>(
     '✓ Ready: 10-Point Learning System initialized (TypeScript, React, Kotlin, JS)'
   );
   const [isRunning, setIsRunning] = useState(false);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
 
   const handleRunHeroDemo = () => {
     setIsRunning(true);
@@ -52,19 +70,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     }, 450);
   };
 
+  const showBanner = lastVisitedLesson && !hideContinueBanner && !bannerDismissed;
+
   return (
-    <section className="relative pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+    <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
       {/* Subtle Floating Ambient Tech Badges in Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <FloatingElement duration={7} distance={12} delay={0.2} className="absolute top-12 left-6 md:left-24 opacity-40">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[11px] font-mono text-emerald-400 backdrop-blur-sm shadow-sm">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 backdrop-blur-sm shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
             <span>TypeScript &bull; React</span>
           </div>
         </FloatingElement>
 
         <FloatingElement duration={8.5} distance={15} delay={1.2} className="absolute top-36 right-8 md:right-32 opacity-40">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[11px] font-mono text-cyan-400 backdrop-blur-sm shadow-sm">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-[11px] font-mono text-cyan-600 dark:text-cyan-400 backdrop-blur-sm shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
             <span>Kotlin &bull; Android</span>
           </div>
@@ -72,63 +92,99 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Continue Learning Banner (Shown when LocalStorage has previous session) */}
-        {lastVisitedLesson && (
-          <FadeIn direction="down" duration={0.35} className="mb-8">
-            <div className="p-4 rounded-xl border border-cyan-500/30 bg-cyan-500/5 dark:bg-cyan-950/25 flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-sm shadow-sm">
-              <div className="space-y-0.5">
+        {/* Continue Learning Banner (Dismissible with Don't Show Again option) */}
+        <AnimatePresence>
+          {showBanner && (
+            <motion.div
+              initial={{ opacity: 0, y: -15, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="mb-8 p-4 sm:p-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md shadow-sm"
+            >
+              <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Continue Learning Where You Left Off</span>
+                  <Sparkles className="w-4 h-4 text-cyan-500 shrink-0" />
+                  <span>{t.hero.continueBannerTitle}</span>
                 </div>
-                <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                  Continue {lastVisitedLesson.courseName} &mdash; <span className="text-cyan-400 font-semibold">{lastVisitedLesson.lessonTitle}</span>
+                <div className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                  {lastVisitedLesson.courseName} &mdash;{' '}
+                  <span className="text-cyan-600 dark:text-cyan-400 font-semibold">
+                    {lastVisitedLesson.lessonTitle}
+                  </span>
                 </div>
               </div>
-              <MagneticButton
-                type="button"
-                onClick={() =>
-                  onContinueLesson(lastVisitedLesson.courseId, lastVisitedLesson.lessonId)
-                }
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs whitespace-nowrap shrink-0 shadow-md shadow-cyan-500/20"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Continue</span>
-              </MagneticButton>
-            </div>
-          </FadeIn>
-        )}
+
+              <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBannerDismissed(true);
+                    onDismissContinueBanner?.();
+                  }}
+                  aria-label="Dismiss banner"
+                  className="px-2.5 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-1"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Dismiss</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setBannerDismissed(true);
+                    setHideContinueBanner(true);
+                    onDontShowAgainContinueBanner?.();
+                  }}
+                  className="px-2.5 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-1"
+                >
+                  <EyeOff className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">Don't show again</span>
+                </button>
+
+                <MagneticButton
+                  type="button"
+                  onClick={() =>
+                    onContinueLesson(lastVisitedLesson.courseId, lastVisitedLesson.lessonId)
+                  }
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs whitespace-nowrap shadow-md shadow-cyan-500/20"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>{t.hero.continueBannerAction}</span>
+                </MagneticButton>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Brand & Primary Value Proposition */}
           <div className="lg:col-span-7 space-y-6">
             <FadeIn direction="up" delay={0.05} distance={14}>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/25 bg-cyan-500/10 text-xs sm:text-sm font-medium text-cyan-600 dark:text-cyan-300 backdrop-blur-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/25 bg-cyan-500/10 text-xs sm:text-sm font-medium text-cyan-700 dark:text-cyan-300 backdrop-blur-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Created by {DANIYAL_IDENTITY.founderName}</span>
-                <span aria-hidden="true">&bull;</span>
-                <span className="opacity-90">{DANIYAL_IDENTITY.role}</span>
+                <span>{t.hero.kicker}</span>
               </div>
             </FadeIn>
 
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.08] text-slate-900 dark:text-white font-display">
                 <TextReveal
-                  text={DANIYAL_IDENTITY.heroMainHeading}
-                  highlightWords={['Daniyal', 'Grow', 'Build']}
-                  highlightClassName="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400"
+                  text={language === 'en' ? DANIYAL_IDENTITY.heroMainHeading : `${t.hero.mainHeading1} ${t.hero.mainHeading2}`}
+                  highlightWords={['Daniyal', 'Grow', 'Build', 'Seekhein', 'Banayein']}
+                  highlightClassName="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 dark:from-emerald-400 dark:via-teal-300 dark:to-cyan-400"
                 />
               </h1>
               <FadeIn direction="up" delay={0.2} distance={16}>
                 <p className="text-lg sm:text-2xl font-semibold text-slate-700 dark:text-slate-200 tracking-tight">
-                  <ShimmerText>{DANIYAL_IDENTITY.heroSubHeading}</ShimmerText>
+                  <ShimmerText>{t.hero.subHeading}</ShimmerText>
                 </p>
               </FadeIn>
             </div>
 
             <FadeIn direction="up" delay={0.28} distance={16}>
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-                {DANIYAL_IDENTITY.heroDescription}
+                {t.hero.description}
               </p>
             </FadeIn>
 
@@ -138,18 +194,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <MagneticButton
                   type="button"
                   onClick={onStartLearning}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-semibold text-sm whitespace-nowrap shadow-lg shadow-cyan-500/20 transition-shadow"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-semibold text-sm whitespace-nowrap shadow-lg shadow-cyan-500/20 transition-shadow min-h-[44px]"
                 >
                   <BookOpen className="w-4 h-4" />
-                  <span>Start Learning</span>
+                  <span>{t.hero.startLearning}</span>
                 </MagneticButton>
 
                 <MagneticButton
                   type="button"
                   onClick={onExploreCourses}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap min-h-[44px]"
                 >
-                  <span>Explore Courses</span>
+                  <span>{t.hero.exploreCourses}</span>
                   <ArrowRight className="w-4 h-4 text-cyan-500 transition-transform group-hover:translate-x-1" />
                 </MagneticButton>
 
@@ -157,9 +213,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   href={DANIYAL_IDENTITY.portfolioUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap"
+                  className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap min-h-[44px]"
                 >
-                  <span>Daniyal's Portfolio</span>
+                  <span>{t.hero.viewPortfolio}</span>
                   <ExternalLink className="w-3.5 h-3.5 text-cyan-500" />
                 </a>
 
@@ -168,10 +224,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit Daniyal Hayat on GitHub (DotDaniyal)"
-                  className="inline-flex items-center gap-2 px-3.5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap"
+                  className="inline-flex items-center gap-2 px-3.5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap min-h-[44px]"
                 >
                   <Github className="w-4 h-4" />
-                  <span>GitHub</span>
+                  <span>{t.hero.github}</span>
                 </a>
               </div>
             </FadeIn>
@@ -179,7 +235,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Clean Unboxed Platform Highlights */}
             <FadeIn direction="up" delay={0.44} distance={14}>
               <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                <span className="flex items-center gap-1.5 text-emerald-400">
+                <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
                   <CheckCircle2 className="w-3.5 h-3.5" /> 10-Point Learning Architecture
                 </span>
                 <span aria-hidden="true">&bull;</span>

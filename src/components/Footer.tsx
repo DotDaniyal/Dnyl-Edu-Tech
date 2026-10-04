@@ -1,20 +1,28 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import { DANIYAL_IDENTITY } from '../data/daniyalData';
+import { AppLanguage, TRANSLATIONS } from '../data/translations';
 import { NavPage } from './Navbar';
 
 interface FooterProps {
   onNavigate: (page: NavPage) => void;
+  language?: AppLanguage;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en' }) => {
+  const t = TRANSLATIONS[language];
   const links: { label: string; page: NavPage }[] = [
-    { label: 'Home', page: 'home' },
-    { label: 'Courses', page: 'courses' },
-    { label: 'Practice', page: 'practice' },
-    { label: 'My Learning', page: 'learning' },
-    { label: 'Projects', page: 'projects' },
-    { label: 'Insights', page: 'blog' },
+    { label: t.nav.home, page: 'home' },
+    { label: t.nav.courses, page: 'courses' },
+    { label: t.nav.practice, page: 'practice' },
+    { label: t.nav.dashboard, page: 'learning' },
+    { label: t.nav.projects, page: 'projects' },
+    { label: t.nav.articles, page: 'blog' },
     { label: 'About', page: 'about' },
   ];
 
@@ -35,7 +43,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               Learn. Build. Grow.
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
-              Created by {DANIYAL_IDENTITY.founderName} — {DANIYAL_IDENTITY.role}.
+              Created by {DANIYAL_IDENTITY.founderName} &mdash; {DANIYAL_IDENTITY.role}.
             </p>
           </div>
 
@@ -45,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 key={item.page}
                 type="button"
                 onClick={() => handleLink(item.page)}
-                className="hover:text-cyan-500 transition-colors whitespace-nowrap"
+                className="hover:text-cyan-500 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1"
               >
                 {item.label}
               </button>
@@ -54,16 +62,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               href={DANIYAL_IDENTITY.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-cyan-500 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-1 hover:text-cyan-500 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1"
             >
-              <span>Portfolio</span>
+              <span>{t.nav.portfolio}</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
             <a
               href={DANIYAL_IDENTITY.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 hover:text-cyan-500 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-1 hover:text-cyan-500 transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1"
             >
               <Github className="w-3.5 h-3.5" />
               <span>GitHub</span>
@@ -72,22 +80,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         <div className="pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
-          <div>© 2026 Daniyal Edu Tech. All rights reserved.</div>
+          <div>&copy; {new Date().getFullYear()} Daniyal Edu Tech. {t.footer.rights}</div>
           <div className="flex items-center gap-3">
             <a
               href={DANIYAL_IDENTITY.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-500"
+              className="hover:text-cyan-500 transition-colors"
             >
               daniyal-hayat-portfolio.vercel.app
             </a>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true">&bull;</span>
             <a
               href={DANIYAL_IDENTITY.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-500"
+              className="hover:text-cyan-500 transition-colors"
             >
               github.com/DotDaniyal
             </a>

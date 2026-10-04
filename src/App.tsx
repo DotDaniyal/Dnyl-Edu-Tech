@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Compass,
   Filter,
+  Heart,
   Home,
   RotateCcw,
   Search,
@@ -21,18 +22,23 @@ import {
   COURSE_DIFFICULTIES,
   getCourseById,
 } from './data/coursesData';
-import { CourseCategory, CourseDifficulty, LastVisitedLesson } from './types/edu';
+import { AppLanguage, TRANSLATIONS } from './data/translations';
+import { Course, CourseCategory, CourseDifficulty, LastVisitedLesson } from './types/edu';
 import {
   addSearchHistory,
   getBookmarkedLessons,
   getCompletedChallenges,
   getCompletedLessons,
   getFavoriteCourses,
+  getHideContinueBanner,
+  getLanguage,
   getLastVisitedLesson,
   getRecentCourses,
   getSearchHistory,
   getTheme,
   markChallengeCompleted,
+  setHideContinueBanner,
+  setLanguage,
   setLastVisitedLesson,
   setTheme,
   toggleBookmarkLesson,
@@ -42,6 +48,7 @@ import {
 import { InteractiveBackground } from './components/InteractiveBackground';
 import { Navbar, NavPage } from './components/Navbar';
 import { CommandSearchModal } from './components/CommandSearchModal';
+import { CoursePreviewModal } from './components/CoursePreviewModal';
 import { HeroSection } from './components/HeroSection';
 import { CourseCard } from './components/CourseCard';
 import { LessonViewer } from './components/LessonViewer';
@@ -62,6 +69,9 @@ export default function App() {
   // Opening Cinematic Preloader State
   const [preloaderDone, setPreloaderDone] = useState(false);
 
+  // Language State (English <-> Roman Urdu)
+  const [language, setLanguageState] = useState<AppLanguage>('en');
+
   // Navigation & Route State
   const [currentPage, setCurrentPage] = useState<NavPage>('home');
   const [activeCourseId, setActiveCourseId] = useState<string>(COURSES[0].id);
@@ -70,9 +80,12 @@ export default function App() {
   );
   const [commandSearchOpen, setCommandSearchOpen] = useState(false);
 
+  // Quick Course Preview Modal
+  const [previewCourse, setPreviewCourse] = useState<Course | null>(null);
+
   // Course Catalog Search & Filter State
   const [catalogSearch, setCatalogSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'All' | CourseCategory>('All');
+  const [selectedCategory, setSelectedCategory] = useState<'All' | 'Saved' | CourseCategory>('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState<'All' | CourseDifficulty>('All');
   const [recentCatalogSearches, setRecentCatalogSearches] = useState<string[]>([]);
 
@@ -84,9 +97,12 @@ export default function App() {
   const [bookmarkedLessons, setBookmarkedLessons] = useState<string[]>([]);
   const [recentCourses, setRecentCourses] = useState<string[]>([]);
   const [lastVisited, setLastVisited] = useState<LastVisitedLesson | null>(null);
+  const [hideContinueBanner, setHideContinueBannerState] = useState(false);
 
   // Toast Notification State
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const t = TRANSLATIONS[language];
 
   const showToast = useCallback((msg: string) => {
     setToastMessage(msg);
@@ -103,6 +119,10 @@ export default function App() {
     const initialTheme = getTheme();
     setThemeState(initialTheme);
     setTheme(initialTheme);
+
+    const initialLang = getLanguage();
+    setLanguageState(initialLang);
+
     setCompletedLessons(getCompletedLessons());
     setCompletedChallenges(getCompletedChallenges());
     setFavoriteCourses(getFavoriteCourses());
@@ -110,6 +130,7 @@ export default function App() {
     setRecentCourses(getRecentCourses());
     setLastVisited(getLastVisitedLesson());
     setRecentCatalogSearches(getSearchHistory());
+    setHideContinueBannerState(getHideContinueBanner());
   }, []);
 
   // Global Command Search Keyboard Shortcut (Ctrl + K / Cmd + K)
@@ -129,6 +150,13 @@ export default function App() {
     setThemeState(next);
     setTheme(next);
     showToast(`Switched to ${next === 'dark' ? 'Dark' : 'Light'} Mode`);
+  };
+
+  const handleToggleLanguage = () => {
+    const next: AppLanguage = language === 'en' ? 'ur' : 'en';
+    setLanguageState(next);
+    setLanguage(next);
+    showToast(next === 'ur' ? 'Roman Urdu zaban muntakhab ki gayi' : 'Switched to English');
   };
 
   const handleOpenCourse = (courseId: string, lessonId?: string) => {
@@ -197,14 +225,33 @@ export default function App() {
     setBookmarkedLessons(updated);
   };
 
+  // Recommended Course calculation
+  const recommendedCourseId = useMemo(() => {
+    if (lastVisited?.courseId) {
+      const current = getCourseById(lastVisited.courseId);
+      if (current?.category === 'Frontend') return 'course-nextjs';
+      if (current?.category === 'Programming') return 'course-react';
+      if (current?.category === 'Mobile') return 'course-algorithms';
+    }
+    return 'course-typescript';
+  }, [lastVisited]);
+
   // Filtered Courses for Catalog
   const filteredCourses = useMemo(() => {
     const q = catalogSearch.trim().toLowerCase();
     return COURSES.filter((course) => {
+      // Saved filter
+      if (selectedCategory === 'Saved' && !favoriteCourses.includes(course.id)) {
+        return false;
+      }
       const matchesCategory =
-        selectedCategory === 'All' || course.category === selectedCategory;
+        selectedCategory === 'All' ||
+        selectedCategory === 'Saved' ||
+        course.category === selectedCategory;
+
       const matchesDifficulty =
         selectedDifficulty === 'All' || course.difficulty === selectedDifficulty;
+
       const matchesQuery =
         !q ||
         course.name.toLowerCase().includes(q) ||
@@ -214,12 +261,13 @@ export default function App() {
         course.lessons.some(
           (l) =>
             l.title.toLowerCase().includes(q) ||
-            l.tenPoints.definition.toLowerCase().includes(q)
+            l.tenPoints.definition.toLowerCase().includes(q) ||
+            l.tenPoints.romanUrduExplanation.toLowerCase().includes(q)
         );
 
       return matchesCategory && matchesDifficulty && matchesQuery;
     });
-  }, [catalogSearch, selectedCategory, selectedDifficulty]);
+  }, [catalogSearch, selectedCategory, selectedDifficulty, favoriteCourses]);
 
   const hasActiveFilters =
     catalogSearch.trim() !== '' ||
@@ -243,18 +291,18 @@ export default function App() {
         <div className="space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Structured 10-Point Curriculum &bull; English &amp; Roman Urdu</span>
+            <span>{t.catalog.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-display">
-            Explore Programming Tracks
+            {t.catalog.title}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
-            Every track is structured around Daniyal Edu Tech’s 10-Point Learning System &mdash; covering definitions, Roman Urdu intuition, internal workings, common mistakes, and live coding practice.
+            {t.catalog.subtitle}
           </p>
         </div>
 
         <div className="text-xs font-mono text-slate-500 dark:text-slate-400 tabular-nums self-start md:self-end">
-          Showing {filteredCourses.length} of {COURSES.length} tracks
+          {filteredCourses.length} {t.catalog.resultsFound}
         </div>
       </FadeIn>
 
@@ -274,7 +322,7 @@ export default function App() {
                     setRecentCatalogSearches(addSearchHistory(catalogSearch));
                   }
                 }}
-                placeholder="Search by course, technology, topic, lesson, or concept..."
+                placeholder={t.catalog.searchPlaceholder}
                 aria-label="Search programming courses"
                 className="w-full pl-10 pr-16 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500 transition-colors"
               />
@@ -296,23 +344,57 @@ export default function App() {
                   key={diff}
                   type="button"
                   onClick={() => setSelectedDifficulty(diff)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 ${
                     selectedDifficulty === diff
                       ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-semibold shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  {diff}
+                  {diff === 'All'
+                    ? t.catalog.difficultyAll
+                    : diff === 'Beginner'
+                    ? t.catalog.difficultyBeginner
+                    : diff === 'Intermediate'
+                    ? t.catalog.difficultyIntermediate
+                    : t.catalog.difficultyAdvanced}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Category Filter Buttons + Clear Filters */}
+          {/* Category Filter Buttons + Saved Filter + Clear Filters */}
           <div className="flex items-center justify-between gap-3 flex-wrap pt-1">
             <div className="flex items-center gap-1.5 flex-wrap">
               <Filter className="w-3.5 h-3.5 text-slate-400 mr-1" />
-              {COURSE_CATEGORIES.map((category) => (
+
+              {/* All button */}
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('All')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+                  selectedCategory === 'All'
+                    ? 'bg-cyan-500 text-slate-950 font-semibold shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                {t.catalog.filterAll}
+              </button>
+
+              {/* Saved Courses Filter button */}
+              <button
+                type="button"
+                onClick={() => setSelectedCategory('Saved')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap flex items-center gap-1 ${
+                  selectedCategory === 'Saved'
+                    ? 'bg-rose-500 text-white font-semibold shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <Heart className={`w-3.5 h-3.5 ${selectedCategory === 'Saved' ? 'fill-current' : ''}`} />
+                <span>{t.catalog.filterSaved} ({favoriteCourses.length})</span>
+              </button>
+
+              {COURSE_CATEGORIES.filter((c) => c !== 'All').map((category) => (
                 <button
                   key={category}
                   type="button"
@@ -335,7 +417,7 @@ export default function App() {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition-colors whitespace-nowrap"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Clear Filters</span>
+                <span>{t.catalog.clearFilters}</span>
               </button>
             )}
           </div>
@@ -364,10 +446,14 @@ export default function App() {
         <FadeIn direction="up">
           <div className="p-12 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm text-center space-y-3 shadow-md">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white font-display">
-              No matching programming tracks found
+              {selectedCategory === 'Saved'
+                ? t.dashboard.noSavedCourses
+                : t.catalog.noResultsTitle}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-              We couldn’t find any tracks matching "{catalogSearch}" with the selected filters. Reset your filters to browse all {COURSES.length} tracks.
+              {selectedCategory === 'Saved'
+                ? t.dashboard.exploreToSave
+                : t.catalog.noResultsDesc}
             </p>
             <button
               type="button"
@@ -375,7 +461,7 @@ export default function App() {
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
-              <span>Clear Filters</span>
+              <span>{t.catalog.resetSearch}</span>
             </button>
           </div>
         </FadeIn>
@@ -386,9 +472,13 @@ export default function App() {
               <CourseCard
                 course={course}
                 completedLessonsCount={
-                  course.lessons.filter((l) => completedLessons.includes(l.id)).length
+                  course.lessons.filter((l) =>
+                    completedLessons.includes(l.id) ||
+                    completedLessons.includes(`${course.id}:${l.id}`)
+                  ).length
                 }
                 isFavorite={favoriteCourses.includes(course.id)}
+                isRecommended={course.id === recommendedCourseId}
                 onToggleFavorite={(id) => {
                   handleToggleFavoriteCourse(id);
                   showToast(
@@ -398,6 +488,8 @@ export default function App() {
                   );
                 }}
                 onOpenCourse={(id) => handleOpenCourse(id)}
+                onPreviewCourse={(c) => setPreviewCourse(c)}
+                language={language}
               />
             </StaggerItem>
           ))}
@@ -419,13 +511,15 @@ export default function App() {
       {/* Ambient Desktop Cursor Glow */}
       <CursorGlow />
 
-      {/* Top Navigation Bar with Scroll Glass Effect */}
+      {/* Top Navigation Bar with Smart Scroll Direction Glass Effect */}
       <Navbar
         currentPage={currentPage}
         onNavigate={setCurrentPage}
         onOpenSearch={() => setCommandSearchOpen(true)}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        language={language}
+        onToggleLanguage={handleToggleLanguage}
       />
 
       {/* Global Command Search Modal (Ctrl + K / Cmd + K) */}
@@ -434,6 +528,22 @@ export default function App() {
         onClose={() => setCommandSearchOpen(false)}
         onSelectCourse={handleOpenCourse}
         onNavigate={setCurrentPage}
+        language={language}
+        onToggleTheme={handleToggleTheme}
+        onToggleLanguage={handleToggleLanguage}
+        theme={theme}
+      />
+
+      {/* Course Quick Outline Preview Modal */}
+      <CoursePreviewModal
+        course={previewCourse}
+        isOpen={Boolean(previewCourse)}
+        onClose={() => setPreviewCourse(null)}
+        completedLessons={completedLessons}
+        isFavorite={previewCourse ? favoriteCourses.includes(previewCourse.id) : false}
+        onToggleFavorite={handleToggleFavoriteCourse}
+        onStartCourse={handleOpenCourse}
+        language={language}
       />
 
       {/* Floating Scroll To Top Button */}
@@ -482,6 +592,10 @@ export default function App() {
                 }}
                 lastVisitedLesson={lastVisited}
                 onContinueLesson={handleOpenCourse}
+                language={language}
+                hideContinueBanner={hideContinueBanner}
+                onDismissContinueBanner={() => {}}
+                onDontShowAgainContinueBanner={() => setHideContinueBannerState(true)}
               />
 
               {/* Course Catalog */}
@@ -510,90 +624,105 @@ export default function App() {
 
           {currentPage === 'courses' && (
             <PageTransition pageKey="courses">
-              {renderCourseCatalogSection(true)}
+              <div className="pt-20">
+                {renderCourseCatalogSection(true)}
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'course-detail' && (
             <PageTransition pageKey="course-detail">
-              <LessonViewer
-                course={activeCourse}
-                activeLessonId={activeLessonId}
-                onSelectLesson={handleSelectLessonInCourse}
-                onBackToCatalog={() => setCurrentPage('courses')}
-                completedLessons={completedLessons}
-                onToggleCompleteLesson={handleToggleCompleteLesson}
-                completedChallenges={completedChallenges}
-                onMarkChallengeComplete={handleMarkChallengeComplete}
-                bookmarkedLessons={bookmarkedLessons}
-                onToggleBookmark={handleToggleBookmarkLesson}
-                isFavoriteCourse={favoriteCourses.includes(activeCourse.id)}
-                onToggleFavoriteCourse={handleToggleFavoriteCourse}
-                onToast={showToast}
-              />
+              <div className="pt-20">
+                <LessonViewer
+                  course={activeCourse}
+                  activeLessonId={activeLessonId}
+                  onSelectLesson={handleSelectLessonInCourse}
+                  onBackToCatalog={() => setCurrentPage('courses')}
+                  completedLessons={completedLessons}
+                  onToggleCompleteLesson={handleToggleCompleteLesson}
+                  completedChallenges={completedChallenges}
+                  onMarkChallengeComplete={handleMarkChallengeComplete}
+                  bookmarkedLessons={bookmarkedLessons}
+                  onToggleBookmark={handleToggleBookmarkLesson}
+                  isFavoriteCourse={favoriteCourses.includes(activeCourse.id)}
+                  onToggleFavoriteCourse={handleToggleFavoriteCourse}
+                  onToast={showToast}
+                />
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'practice' && (
             <PageTransition pageKey="practice">
-              <PracticeArena
-                completedChallenges={completedChallenges}
-                onMarkChallengeComplete={handleMarkChallengeComplete}
-                onOpenLesson={handleOpenCourse}
-                onToast={showToast}
-              />
+              <div className="pt-20">
+                <PracticeArena
+                  completedChallenges={completedChallenges}
+                  onMarkChallengeComplete={handleMarkChallengeComplete}
+                  onOpenLesson={handleOpenCourse}
+                  onToast={showToast}
+                />
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'learning' && (
             <PageTransition pageKey="learning">
-              <MyLearningDashboard
-                completedLessons={completedLessons}
-                completedChallenges={completedChallenges}
-                favoriteCourses={favoriteCourses}
-                bookmarkedLessons={bookmarkedLessons}
-                recentCourses={recentCourses}
-                lastVisitedLesson={lastVisited}
-                onOpenCourse={handleOpenCourse}
-                onToggleFavorite={handleToggleFavoriteCourse}
-                onToggleBookmark={handleToggleBookmarkLesson}
-                onExploreCourses={() => setCurrentPage('courses')}
-              />
+              <div className="pt-20">
+                <MyLearningDashboard
+                  completedLessons={completedLessons}
+                  completedChallenges={completedChallenges}
+                  favoriteCourses={favoriteCourses}
+                  bookmarkedLessons={bookmarkedLessons}
+                  recentCourses={recentCourses}
+                  lastVisitedLesson={lastVisited}
+                  onOpenCourse={handleOpenCourse}
+                  onToggleFavorite={handleToggleFavoriteCourse}
+                  onToggleBookmark={handleToggleBookmarkLesson}
+                  onExploreCourses={() => setCurrentPage('courses')}
+                  language={language}
+                />
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'projects' && (
             <PageTransition pageKey="projects">
-              <ProjectsAndPortfolioSection onOpenCourse={handleOpenCourse} />
+              <div className="pt-20">
+                <ProjectsAndPortfolioSection onOpenCourse={handleOpenCourse} />
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'blog' && (
             <PageTransition pageKey="blog">
-              <AboutAndBlogSection
-                mode="blog-only"
-                onOpenCourse={handleOpenCourse}
-                onExploreCourses={() => setCurrentPage('courses')}
-                onToast={showToast}
-              />
+              <div className="pt-20">
+                <AboutAndBlogSection
+                  mode="blog-only"
+                  onOpenCourse={handleOpenCourse}
+                  onExploreCourses={() => setCurrentPage('courses')}
+                  onToast={showToast}
+                />
+              </div>
             </PageTransition>
           )}
 
           {currentPage === 'about' && (
             <PageTransition pageKey="about">
-              <AboutAndBlogSection
-                mode="full"
-                onOpenCourse={handleOpenCourse}
-                onExploreCourses={() => setCurrentPage('courses')}
-                onToast={showToast}
-              />
+              <div className="pt-20">
+                <AboutAndBlogSection
+                  mode="full"
+                  onOpenCourse={handleOpenCourse}
+                  onExploreCourses={() => setCurrentPage('courses')}
+                  onToast={showToast}
+                />
+              </div>
             </PageTransition>
           )}
 
           {/* 404 Experience */}
           {currentPage === '404' && (
             <PageTransition pageKey="404">
-              <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center space-y-6">
+              <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-28 text-center space-y-6">
                 <FloatingElement distance={8} duration={4}>
                   <div className="font-mono text-sm font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 inline-block px-3 py-1 rounded-full">
                     404 NOT FOUND
@@ -634,7 +763,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer onNavigate={setCurrentPage} />
+      <Footer onNavigate={setCurrentPage} language={language} />
     </div>
   );
 }

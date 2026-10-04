@@ -1,3 +1,8 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from 'react';
 import { motion } from 'motion/react';
 import {
@@ -15,6 +20,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { COURSES, getAllLessons } from '../data/coursesData';
+import { AppLanguage, TRANSLATIONS } from '../data/translations';
 import { LastVisitedLesson } from '../types/edu';
 import { CourseCard } from './CourseCard';
 import { NumberCounter } from './animations/NumberCounter';
@@ -33,6 +39,7 @@ interface MyLearningDashboardProps {
   onToggleFavorite: (courseId: string) => void;
   onToggleBookmark: (lessonId: string) => void;
   onExploreCourses: () => void;
+  language?: AppLanguage;
 }
 
 export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
@@ -46,7 +53,9 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
   onToggleFavorite,
   onToggleBookmark,
   onExploreCourses,
+  language = 'en',
 }) => {
+  const t = TRANSLATIONS[language];
   const allLessons = getAllLessons();
   const totalLessonsCount = allLessons.length;
   const overallProgressPercent =
@@ -83,10 +92,10 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
             <span>Developer Learning Telemetry &bull; LocalStorage Sync</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-display">
-            My Learning Dashboard
+            {t.dashboard.title}
           </h1>
           <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
-            Track your completed lessons, coding challenges, XP, favorite tracks, and saved concepts in real-time.
+            {t.dashboard.subtitle}
           </p>
         </div>
 
@@ -125,7 +134,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
           >
             <div className="text-xs text-amber-500 dark:text-amber-400 font-medium flex items-center gap-1">
               <Zap className="w-3.5 h-3.5 fill-current" />
-              <span>Earned XP</span>
+              <span>{t.dashboard.xpEarned}</span>
             </div>
             <div className="text-2xl sm:text-3xl font-bold font-mono text-amber-500 tabular-nums">
               <NumberCounter value={totalXP} />
@@ -142,7 +151,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
           >
             <div className="text-xs text-rose-500 dark:text-rose-400 font-medium flex items-center gap-1">
               <Flame className="w-3.5 h-3.5 fill-current animate-bounce" />
-              <span>Day Streak</span>
+              <span>{t.dashboard.streak}</span>
             </div>
             <div className="text-2xl sm:text-3xl font-bold font-mono text-rose-500 tabular-nums">
               <NumberCounter value={currentStreakDays} suffix=" Days" />
@@ -186,7 +195,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
           <SpotlightCard className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
             <div className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
               <Code2 className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Practice Solved</span>
+              <span>{t.dashboard.completedChallenges}</span>
             </div>
             <div className="text-2xl sm:text-3xl font-bold font-mono text-cyan-400 tabular-nums">
               <NumberCounter value={completedChallenges.length} />
@@ -195,6 +204,40 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
           </SpotlightCard>
         </StaggerItem>
       </StaggerContainer>
+
+      {/* Completion Mastery Badge & Certificate Card */}
+      {completedLessons.length >= 3 && (
+        <FadeIn direction="up">
+          <div className="p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-transparent flex flex-col md:flex-row md:items-center justify-between gap-6 backdrop-blur-sm">
+            <div className="flex items-start gap-4">
+              <div className="p-3.5 rounded-2xl bg-emerald-500 text-slate-950 shrink-0 shadow-lg shadow-emerald-500/25">
+                <Award className="w-8 h-8" />
+              </div>
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Developer Mastery Milestone</span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-display">
+                  Verified 10-Point Engineering Progress ({completedLessons.length} Lessons Completed)
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl">
+                  You have successfully mastered multiple programming topics across syntax, internals, common pitfalls, and hands-on practice code.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="text-right hidden sm:block">
+                <div className="text-xs text-slate-500">Mastery Level</div>
+                <div className="text-sm font-bold font-mono text-emerald-600 dark:text-emerald-400">
+                  {completedLessons.length >= 10 ? 'Senior Apprentice' : 'Active Builder'}
+                </div>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      )}
 
       {/* Continue Learning Card */}
       {lastVisitedLesson && (
@@ -206,7 +249,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
             <div className="space-y-1">
               <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Resume Previous Learning Session</span>
+                <span>{t.dashboard.resume}</span>
               </div>
               <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-display">
                 Continue {lastVisitedLesson.courseName} &mdash; <span className="text-cyan-400">{lastVisitedLesson.lessonTitle}</span>
@@ -221,7 +264,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
               }
               className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs sm:text-sm whitespace-nowrap shrink-0 shadow-md shadow-cyan-500/20"
             >
-              <span>Continue Lesson</span>
+              <span>{t.hero.continueBannerAction}</span>
               <ArrowRight className="w-4 h-4" />
             </motion.button>
           </SpotlightCard>
@@ -233,7 +276,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
         <FadeIn direction="up" className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white font-display flex items-center gap-2">
             <Heart className="w-5 h-5 text-rose-500 fill-current" />
-            <span>My Saved Favorite Tracks ({favoriteCourseObjects.length})</span>
+            <span>{t.dashboard.savedCourses} ({favoriteCourseObjects.length})</span>
           </h2>
         </FadeIn>
 
@@ -241,10 +284,10 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
           <FadeIn direction="up">
             <div className="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm text-center space-y-2">
               <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                You have not favorited any courses yet.
+                {t.dashboard.noSavedCourses}
               </p>
               <p className="text-xs text-slate-500">
-                Click "♡ Save" on any course card to save it here for quick access.
+                {t.dashboard.exploreToSave}
               </p>
             </div>
           </FadeIn>
@@ -260,6 +303,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
                   isFavorite={true}
                   onToggleFavorite={onToggleFavorite}
                   onOpenCourse={(id) => onOpenCourse(id)}
+                  language={language}
                 />
               </StaggerItem>
             ))}
@@ -364,6 +408,7 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
                   isFavorite={favoriteCourses.includes(course.id)}
                   onToggleFavorite={onToggleFavorite}
                   onOpenCourse={(id) => onOpenCourse(id)}
+                  language={language}
                 />
               </StaggerItem>
             ))}
