@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 import {
   ArrowUpRight,
   BookOpen,
@@ -7,9 +8,13 @@ import {
   FolderGit2,
   Github,
   Layers,
+  Sparkles,
 } from 'lucide-react';
 import { DANIYAL_IDENTITY, REAL_PROJECTS } from '../data/daniyalData';
 import { RealProject } from '../types/edu';
+import { FadeIn } from './animations/FadeIn';
+import { StaggerContainer, StaggerItem } from './animations/StaggerContainer';
+import { SpotlightCard } from './animations/SpotlightCard';
 
 interface ProjectsAndPortfolioSectionProps {
   onOpenCourse: (courseId: string) => void;
@@ -50,18 +55,19 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
 
   return (
     <div className="space-y-16 py-12">
-      {/* Section 25: Built by Daniyal */}
+      {/* Built by Daniyal Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <FadeIn direction="up" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
           <div className="space-y-2">
-            <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-              Verified Production Repositories &amp; Deployments
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Verified Production Repositories &bull; GitHub DotDaniyal</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white font-display">
               Built by Daniyal
             </h2>
             <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl">
-              Real applications, platforms, and algorithmic games engineered by Daniyal Hayat — connecting every programming track on this platform to production source code.
+              Real applications, platforms, and algorithmic games engineered by Daniyal Hayat &mdash; connecting every programming track on this platform to production source code.
             </p>
           </div>
 
@@ -70,7 +76,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
               href={DANIYAL_IDENTITY.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-semibold text-xs whitespace-nowrap shadow-md shadow-cyan-500/20 transition-all"
             >
               <span>Visit Portfolio</span>
               <ExternalLink className="w-3.5 h-3.5" />
@@ -79,328 +85,211 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
               href={DANIYAL_IDENTITY.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-cyan-500 text-slate-800 dark:text-slate-200 font-semibold text-xs whitespace-nowrap"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-cyan-500 text-slate-800 dark:text-slate-200 font-semibold text-xs whitespace-nowrap bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span>GitHub (DotDaniyal)</span>
             </a>
           </div>
-        </div>
+        </FadeIn>
 
         {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {REAL_PROJECTS.map((project) => (
-            <article
-              key={project.id}
-              className="flex flex-col justify-between p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] hover:border-cyan-500/60 transition-all duration-150 hover:-translate-y-0.5"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2">
-                  <span>{project.category}</span>
-                  <span aria-hidden="true">·</span>
-                  <span className="font-mono text-cyan-600 dark:text-cyan-400">
-                    {project.language}
-                  </span>
+            <StaggerItem key={project.id}>
+              <SpotlightCard className="flex flex-col justify-between p-6 border border-slate-200 dark:border-slate-800/90 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm hover:border-cyan-500/60 transition-all h-full">
+                <div>
+                  <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2">
+                    <span>{project.category}</span>
+                    <span aria-hidden="true">&bull;</span>
+                    <span className="font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
+                      {project.language}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">
+                    {project.name}
+                  </h3>
+
+                  <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+                    {project.description}
+                  </p>
+
+                  <div className="mb-4">
+                    <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-1">
+                      Technologies
+                    </div>
+                    <div className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-mono">
+                      {project.technologies.join(' · ')}
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-800/80 mb-5">
+                    <div className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400">
+                      Relevant Educational Topic
+                    </div>
+                    <div className="text-xs text-slate-700 dark:text-slate-300 mt-0.5">
+                      {project.relatedTopic}
+                    </div>
+                  </div>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  {project.name}
-                </h3>
-
-                <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
-                  {project.description}
-                </p>
-
-                <div className="mb-4">
-                  <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-1">
-                    Technologies
-                  </div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                    {project.technologies.join(' · ')}
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-800/80 mb-5">
-                  <div className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400">
-                    Relevant Educational Topic
-                  </div>
-                  <div className="text-xs text-slate-700 dark:text-slate-300 mt-0.5">
-                    {project.relatedTopic}
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5">
-                <div className="flex items-center gap-2">
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-cyan-500 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors whitespace-nowrap"
-                  >
-                    <Github className="w-3.5 h-3.5" />
-                    <span>GitHub</span>
-                  </a>
-                  {project.liveUrl && (
+                <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5">
+                  <div className="flex items-center gap-2">
                     <a
-                      href={project.liveUrl}
+                      href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-xs font-semibold text-slate-950 transition-colors whitespace-nowrap"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-cyan-500 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors whitespace-nowrap"
                     >
-                      <span>Live Demo</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <Github className="w-3.5 h-3.5" />
+                      <span>Code Repository</span>
                     </a>
-                  )}
-                </div>
 
-                <div className="flex items-center gap-2">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-xs font-semibold transition-colors whitespace-nowrap"
+                      >
+                        <span>Demo</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedProject(project);
-                      const el = document.getElementById('learn-through-real-projects');
-                      el?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="flex-1 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-300 transition-colors whitespace-nowrap"
+                    onClick={() => onOpenCourse(project.relatedCourseIds[0] || 'course-javascript')}
+                    className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors"
                   >
-                    Inspect Architecture
+                    <BookOpen className="w-3.5 h-3.5 text-cyan-500" />
+                    <span>Study Related Course Track &rarr;</span>
                   </button>
-                  {project.relatedCourseIds[0] && (
-                    <button
-                      type="button"
-                      onClick={() => onOpenCourse(project.relatedCourseIds[0])}
-                      className="px-3 py-2 rounded-lg text-xs font-semibold text-cyan-600 dark:text-cyan-400 hover:underline whitespace-nowrap"
-                    >
-                      Related Course →
-                    </button>
-                  )}
                 </div>
-              </div>
-            </article>
+              </SpotlightCard>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
-      {/* Section 26: Learn Through Real Projects */}
-      <section
-        id="learn-through-real-projects"
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8"
-      >
-        <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] space-y-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
-            <div className="space-y-1">
-              <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
-                <Layers className="w-4 h-4" />
-                <span>Interactive Engineering Case Study Breakdown</span>
+      {/* Case Study Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <FadeIn direction="up" className="p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-8 shadow-xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-6">
+            <div className="space-y-2">
+              <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                Production Case Study &bull; Real Architecture
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display">
-                Learn Through Real Projects
-              </h2>
-              <p className="text-sm text-slate-600 dark:text-slate-300">
-                Select any verified project built by Daniyal Hayat to study its technology choices, architecture, UI components, core logic, and development process.
+              <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-display">
+                {selectedProject.name} Architecture
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300 max-w-xl">
+                {selectedProject.description}
               </p>
             </div>
 
-            {/* Project Selector Tabs */}
-            <div className="flex items-center gap-1.5 flex-wrap">
-              {REAL_PROJECTS.slice(0, 5).map((proj) => (
+            {/* Project Switcher */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
+              {REAL_PROJECTS.map((proj) => (
                 <button
                   key={proj.id}
                   type="button"
                   onClick={() => setSelectedProject(proj)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
+                  className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
                     selectedProject.id === proj.id
-                      ? 'bg-cyan-500 text-slate-950 font-semibold'
-                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
+                      : 'border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
-                  {proj.name.split(' ')[0]} {proj.name.split(' ')[1] || ''}
+                  {proj.name}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Active Project Architectural Breakdown */}
-          <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 font-mono">
-                  Repository: {selectedProject.repoName}
-                </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
-                  Project: {selectedProject.name}
-                </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2">
+              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                1. System Architecture
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <a
-                  href={selectedProject.liveUrl || selectedProject.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs whitespace-nowrap"
-                >
-                  <span>Explore Project</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-                {selectedProject.relatedCourseIds[0] && (
-                  <button
-                    type="button"
-                    onClick={() => onOpenCourse(selectedProject.relatedCourseIds[0])}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-cyan-500 text-xs font-semibold text-slate-800 dark:text-slate-200 whitespace-nowrap"
-                  >
-                    <BookOpen className="w-3.5 h-3.5 text-cyan-500" />
-                    <span>Study Related Track</span>
-                  </button>
-                )}
-              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                {selectedProject.learnBreakdown.architecture}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  01. Technology Used
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2">
+              <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                2. Core Logic &amp; Engineering
+              </div>
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                {selectedProject.learnBreakdown.coreLogic}
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl bg-cyan-500/5 dark:bg-cyan-950/20 border border-cyan-500/30 space-y-3 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="text-xs font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                  3. Educational Connection
                 </div>
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.technologyUsed}
+                  Learn how {selectedProject.name} was structured by exploring the linked curriculum track.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  02. Architecture
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.architecture}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  03. UI &amp; Visual System
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.uiAndDesign}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  04. Key Components
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.components}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  05. Core Logic &amp; Data Flow
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.coreLogic}
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/80 dark:border-slate-800 space-y-1.5">
-                <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-                  06. Development Process
-                </div>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedProject.learnBreakdown.developmentProcess}
-                </p>
-              </div>
+              <button
+                type="button"
+                onClick={() => onOpenCourse(selectedProject.relatedCourseIds[0] || 'course-javascript')}
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs transition-colors shadow-md shadow-cyan-500/20"
+              >
+                <span>Explore Track Concepts</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
-        </div>
+        </FadeIn>
       </section>
 
-      {/* Section 27: Dedicated Daniyal's Portfolio & Live GitHub Ecosystem Integration */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-6 sm:p-10 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-7 space-y-4">
-            <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
-              Connected Personal Developer Ecosystem
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display">
-              Daniyal’s Portfolio &amp; GitHub
-            </h2>
-            <p className="text-base text-slate-700 dark:text-slate-200 font-medium">
-              Explore my complete developer portfolio
-            </p>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
-              Visit Daniyal Hayat’s official portfolio platform to inspect interactive case studies, full-stack services, and live GitHub repository telemetry, or browse source repositories directly on GitHub (`DotDaniyal`).
-            </p>
+      {/* GitHub Live Feed */}
+      {liveRepos.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          <FadeIn direction="up">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display flex items-center gap-2">
+              <Github className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+              <span>Latest GitHub Activity from @DotDaniyal</span>
+            </h3>
+          </FadeIn>
 
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href={DANIYAL_IDENTITY.portfolioUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-sm transition-colors whitespace-nowrap"
-              >
-                <span>Visit Portfolio</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-
-              <a
-                href={DANIYAL_IDENTITY.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-cyan-500 text-slate-900 dark:text-white font-semibold text-sm transition-colors whitespace-nowrap"
-              >
-                <Github className="w-4 h-4" />
-                <span>GitHub Profile (@DotDaniyal)</span>
-              </a>
-            </div>
-          </div>
-
-          {/* Live GitHub Activity Feed Preview Card */}
-          <div className="lg:col-span-5 p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/70 space-y-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <FolderGit2 className="w-4 h-4 text-cyan-500" />
-                <span>GitHub Feed · github.com/DotDaniyal</span>
-              </span>
-              <a
-                href={DANIYAL_IDENTITY.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cyan-600 dark:text-cyan-400 hover:underline font-mono"
-              >
-                View All →
-              </a>
-            </div>
-
-            <div className="divide-y divide-slate-200 dark:divide-slate-800 text-xs">
-              {(liveRepos.length > 0
-                ? liveRepos.slice(0, 4).map((r) => ({
-                    name: r.name,
-                    url: r.html_url,
-                    lang: r.language || 'TypeScript',
-                  }))
-                : REAL_PROJECTS.slice(0, 4).map((p) => ({
-                    name: p.repoName.replace('DotDaniyal/', ''),
-                    url: p.githubUrl,
-                    lang: p.language,
-                  }))
-              ).map((repo) => (
+          <StaggerContainer staggerDelay={0.06} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {liveRepos.map((repo) => (
+              <StaggerItem key={repo.id}>
                 <a
-                  key={repo.name}
-                  href={repo.url}
+                  href={repo.html_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-2.5 flex items-center justify-between gap-2 hover:text-cyan-500 transition-colors"
+                  className="block p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#0d1322]/80 hover:border-cyan-500/60 transition-all hover:-translate-y-0.5"
                 >
-                  <span className="font-mono font-medium text-slate-800 dark:text-slate-200 truncate">
-                    DotDaniyal/{repo.name}
-                  </span>
-                  <span className="text-slate-500 shrink-0">{repo.lang}</span>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="font-bold text-sm text-slate-900 dark:text-white truncate font-mono">
+                      {repo.name}
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-2">
+                    {repo.description || 'Public GitHub repository by Daniyal Hayat'}
+                  </p>
+                  {repo.language && (
+                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
+                      {repo.language}
+                    </span>
+                  )}
                 </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </section>
+      )}
     </div>
   );
 };
