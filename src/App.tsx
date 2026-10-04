@@ -763,7 +763,14 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer onNavigate={setCurrentPage} language={language} />
+      <Footer
+        onNavigate={setCurrentPage}
+        language={language}
+        onReplayIntro={() => {
+          setPreloaderDone(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
     </div>
   );
 }

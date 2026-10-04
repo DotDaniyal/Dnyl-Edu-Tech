@@ -13,14 +13,14 @@ import { DANIYAL_IDENTITY } from '../../data/daniyalData';
 const PRELOADER_TIMINGS = {
   /** Active progress bar advancement duration (4.8s) */
   PROGRESS_DURATION_MS: 4800,
-  /** Brief pause at 100% before triggering exit curtain (0.25s) */
-  COMPLETION_HOLD_MS: 250,
+  /** Brief pause at 100% before triggering exit curtain (0.3s) */
+  COMPLETION_HOLD_MS: 300,
   /** Exit slide-up animation duration in seconds (0.85s) */
   EXIT_DURATION_SEC: 0.85,
   /** Exit slide-up animation duration in ms */
   EXIT_DURATION_MS: 850,
   /** Progress polling interval in ms */
-  TICK_INTERVAL_MS: 20,
+  TICK_INTERVAL_MS: 16,
 };
 
 interface EduTechPreloaderProps {
@@ -33,16 +33,6 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Respect accessibility reduced motion
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    if (prefersReducedMotion) {
-      onComplete();
-      return;
-    }
-
     const duration = PRELOADER_TIMINGS.PROGRESS_DURATION_MS;
     const startTime = Date.now();
 
@@ -50,7 +40,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
       const elapsed = Date.now() - startTime;
       const linearPct = Math.min(1, elapsed / duration);
 
-      // Smooth organic S-curve easing for cinematic progress
+      // Smooth organic S-curve easing for cinematic progress across 5-6s
       const easedPct =
         linearPct < 0.5
           ? 4 * linearPct * linearPct * linearPct
@@ -59,7 +49,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
       const currentProgress = Math.min(100, Math.floor(easedPct * 100));
       setProgress(currentProgress);
 
-      // Progressive status updates across the deliberate 5-6s sequence
+      // Dynamic milestone status updates
       if (currentProgress < 20) {
         setPhase('intro');
         setStatusMessage('INITIALIZING 10-POINT LEARNING ENGINE...');
@@ -105,39 +95,43 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
           exit={{
             y: '-100%',
             opacity: 0,
-            filter: 'blur(10px)',
+            filter: 'blur(12px)',
             transition: {
               duration: PRELOADER_TIMINGS.EXIT_DURATION_SEC,
               ease: [0.19, 1, 0.22, 1], // Smooth cinematic slide-up exit
             },
           }}
-          className="fixed inset-0 z-[99999] bg-[#07090e] flex flex-col items-center justify-center select-none overflow-hidden"
+          className="fixed inset-0 z-[999999] bg-[#07090e] flex flex-col items-center justify-center select-none overflow-hidden"
           style={{ willChange: 'transform, opacity, filter' }}
         >
-          {/* Subtle Background Developer Dot Matrix Grid */}
+          {/* Background Matrix Grid */}
           <div
-            className="absolute inset-0 opacity-[0.06] pointer-events-none"
+            className="absolute inset-0 opacity-[0.08] pointer-events-none"
             style={{
               backgroundImage:
-                'radial-gradient(circle at 1px 1px, #38bdf8 1px, transparent 0)',
-              backgroundSize: '28px 28px',
+                'radial-gradient(circle at 1px 1px, #38bdf8 1.5px, transparent 0)',
+              backgroundSize: '32px 32px',
             }}
           />
 
           {/* Soft Blue & Purple Ambient Glow behind Logo */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0.3 }}
+            initial={{ scale: 0.8, opacity: 0.4 }}
             animate={{
-              scale: [0.88, 1.2, 1],
-              opacity: [0.35, 0.75, 0.45],
+              scale: [0.9, 1.25, 0.95],
+              opacity: [0.4, 0.8, 0.45],
             }}
             exit={{
-              scale: 1.35,
+              scale: 1.4,
               opacity: 0,
               transition: { duration: 0.75, ease: [0.19, 1, 0.22, 1] },
             }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute w-[480px] h-[480px] sm:w-[580px] sm:h-[580px] rounded-full bg-radial from-cyan-500/25 via-indigo-600/20 to-transparent blur-[90px] pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle, rgba(6,182,212,0.3) 0%, rgba(99,102,241,0.2) 45%, transparent 70%)',
+            }}
+            className="absolute w-[500px] h-[500px] sm:w-[620px] sm:h-[620px] rounded-full blur-[90px] pointer-events-none"
           />
 
           {/* Top Subtle Scanning Light Beam */}
@@ -145,7 +139,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
             animate={{ x: ['-100%', '100%'] }}
             exit={{ opacity: 0, transition: { duration: 0.4 } }}
             transition={{ duration: 2.2, repeat: Infinity, ease: 'linear' }}
-            className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-85 shadow-[0_0_10px_#22d3ee]"
+            className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-90 shadow-[0_0_12px_#22d3ee]"
           />
 
           {/* Center Brand Container */}
@@ -159,12 +153,12 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
             }}
             className="relative z-10 flex flex-col items-center space-y-6 max-w-md px-6 text-center"
           >
-            {/* Logo Emblem (Initial: opacity: 0, scale: 0.80, blur: 10px, y: 14px -> 0px) */}
+            {/* Logo Emblem */}
             <div className="relative">
               <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.55, 0.15] }}
+                animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.6, 0.2] }}
                 transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -inset-3 rounded-2xl border border-cyan-500/40 pointer-events-none"
+                className="absolute -inset-3 rounded-2xl border border-cyan-500/50 pointer-events-none"
               />
 
               <motion.div
@@ -176,13 +170,13 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
                   y: 0,
                 }}
                 transition={{ duration: 1.1, ease: [0.19, 1, 0.22, 1] }}
-                className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-slate-900/95 border border-cyan-500/50 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/30 backdrop-blur-xl ring-1 ring-white/10"
+                className="relative w-22 h-22 sm:w-24 sm:h-24 rounded-2xl bg-slate-900/95 border-2 border-cyan-500/60 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/35 backdrop-blur-xl ring-1 ring-white/20"
               >
-                <div className="font-mono text-2xl sm:text-3xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
+                <div className="font-mono text-3xl sm:text-4xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
                   &lt;/&gt;
                 </div>
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-ping" />
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-cyan-400" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] animate-ping" />
+                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-cyan-400" />
               </motion.div>
             </div>
 
@@ -192,7 +186,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
                 initial={{ opacity: 0, y: 12, filter: 'blur(8px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ delay: 0.25, duration: 0.85, ease: [0.19, 1, 0.22, 1] }}
-                className="text-lg sm:text-xl font-bold tracking-tight text-white font-display uppercase"
+                className="text-xl sm:text-2xl font-bold tracking-tight text-white font-display uppercase"
               >
                 {DANIYAL_IDENTITY.platformName}
               </motion.div>
@@ -201,31 +195,33 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex items-center justify-center gap-2 text-xs font-mono tracking-wider text-slate-400 min-h-[20px]"
+                className="flex items-center justify-center gap-2 text-xs font-mono tracking-wider text-slate-300 min-h-[22px]"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-cyan-400 font-medium transition-all duration-300">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#34d399]" />
+                <span className="text-cyan-300 font-semibold tracking-wide transition-all duration-300">
                   {statusMessage}
                 </span>
               </motion.div>
             </div>
 
-            {/* Thin Animated Loading Line under Logo (0% -> 100%) */}
+            {/* Glowing Animated Loading Bar */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.35, duration: 0.6 }}
-              className="w-56 sm:w-68 space-y-2.5"
+              className="w-64 sm:w-76 space-y-2.5"
             >
-              <div className="w-full h-1.5 bg-slate-800/90 rounded-full overflow-hidden p-[0.5px] border border-slate-700/60 shadow-inner">
+              <div className="w-full h-2.5 bg-slate-900/90 rounded-full overflow-hidden p-[1px] border border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-500 rounded-full shadow-[0_0_12px_rgba(6,182,212,0.8)]"
+                  className="h-full bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-500 rounded-full shadow-[0_0_14px_rgba(6,182,212,0.9)] relative"
                   style={{ width: `${progress}%`, transition: 'width 80ms linear' }}
-                />
+                >
+                  <span className="absolute right-0 top-0 bottom-0 w-2 bg-white/80 rounded-full shadow-[0_0_6px_#ffffff]" />
+                </motion.div>
               </div>
-              <div className="flex items-center justify-between text-[11px] font-mono text-slate-500">
-                <span className="text-slate-400">DANIYAL HAYAT // {new Date().getFullYear()}</span>
-                <span className="text-cyan-300 font-bold tabular-nums text-xs">{progress}%</span>
+              <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span className="text-slate-300 font-medium">DANIYAL HAYAT // {new Date().getFullYear()}</span>
+                <span className="text-cyan-300 font-bold tabular-nums">{progress}%</span>
               </div>
             </motion.div>
           </motion.div>
@@ -236,7 +232,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
             exit={{ opacity: 0, transition: { duration: 0.4 } }}
-            className="absolute bottom-6 flex items-center gap-2.5 text-[11px] font-mono text-slate-500 tracking-widest uppercase"
+            className="absolute bottom-6 flex items-center gap-2.5 text-xs font-mono text-slate-400 tracking-widest uppercase font-medium"
           >
             <span>LEARN</span>
             <span aria-hidden="true">&bull;</span>

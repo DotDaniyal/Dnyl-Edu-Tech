@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Play } from 'lucide-react';
 import { DANIYAL_IDENTITY } from '../data/daniyalData';
 import { AppLanguage, TRANSLATIONS } from '../data/translations';
 import { NavPage } from './Navbar';
@@ -12,9 +12,10 @@ import { NavPage } from './Navbar';
 interface FooterProps {
   onNavigate: (page: NavPage) => void;
   language?: AppLanguage;
+  onReplayIntro?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en' }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en', onReplayIntro }) => {
   const t = TRANSLATIONS[language];
   const links: { label: string; page: NavPage }[] = [
     { label: t.nav.home, page: 'home' },
@@ -58,6 +59,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en' }) =
                 {item.label}
               </button>
             ))}
+            {onReplayIntro && (
+              <button
+                type="button"
+                onClick={onReplayIntro}
+                className="inline-flex items-center gap-1 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 rounded p-1"
+              >
+                <Play className="w-3.5 h-3.5" />
+                <span>Replay Intro Animation</span>
+              </button>
+            )}
             <a
               href={DANIYAL_IDENTITY.portfolioUrl}
               target="_blank"
