@@ -56,8 +56,12 @@ import { CursorGlow } from './components/animations/CursorGlow';
 import { FadeIn } from './components/animations/FadeIn';
 import { StaggerContainer, StaggerItem } from './components/animations/StaggerContainer';
 import { FloatingElement } from './components/animations/FloatingElement';
+import { EduTechPreloader } from './components/animations/EduTechPreloader';
 
 export default function App() {
+  // Opening Cinematic Preloader State
+  const [preloaderDone, setPreloaderDone] = useState(false);
+
   // Navigation & Route State
   const [currentPage, setCurrentPage] = useState<NavPage>('home');
   const [activeCourseId, setActiveCourseId] = useState<string>(COURSES[0].id);
@@ -404,6 +408,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] dark:bg-[#090d16] text-slate-900 dark:text-slate-100 relative overflow-x-hidden">
+      {/* Premium Cinematic Startup Animation */}
+      {!preloaderDone && (
+        <EduTechPreloader onComplete={() => setPreloaderDone(true)} />
+      )}
+
       {/* Interactive Developer Mesh Background */}
       <InteractiveBackground />
 
