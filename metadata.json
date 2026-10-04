@@ -1,0 +1,6 @@
+{
+  "name": "Daniyal Edu Tech",
+  "description": "Daniyal Edu Tech is a modern programming education platform for learning development concepts through structured lessons, practical code examples, projects, and hands-on practice.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
