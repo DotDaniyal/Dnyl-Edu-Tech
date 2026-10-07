@@ -135,7 +135,7 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
           role="dialog"
           aria-modal="true"
           aria-label={t.searchModal.title}
-          className="fixed inset-0 z-50 flex items-start justify-center pt-14 sm:pt-20 px-4"
+          className="fixed inset-0 z-50 flex items-start justify-center pt-6 sm:pt-16 md:pt-20 px-3 sm:px-4"
         >
           {/* Backdrop */}
           <motion.div

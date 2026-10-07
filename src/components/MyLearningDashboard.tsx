@@ -112,15 +112,15 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
       </FadeIn>
 
       {/* Top Metrics Row with NumberCounter */}
-      <StaggerContainer staggerDelay={0.06} className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+      <StaggerContainer staggerDelay={0.06} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {/* Metric 1: Overall Progress */}
         <StaggerItem>
-          <SpotlightCard className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
+          <SpotlightCard className="p-3.5 sm:p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
             <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Overall Progress</div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-cyan-500 tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-cyan-500 tabular-nums">
               <NumberCounter value={overallProgressPercent} suffix="%" />
             </div>
-            <div className="text-xs text-slate-400 tabular-nums">
+            <div className="text-[11px] sm:text-xs text-slate-400 tabular-nums">
               {completedLessons.length} of {totalLessonsCount} lessons
             </div>
           </SpotlightCard>
@@ -130,16 +130,16 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
         <StaggerItem>
           <SpotlightCard
             spotlightColor="rgba(245, 158, 11, 0.15)"
-            className="p-5 border border-amber-500/30 bg-amber-500/5 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
+            className="p-3.5 sm:p-5 border border-amber-500/30 bg-amber-500/5 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
           >
             <div className="text-xs text-amber-500 dark:text-amber-400 font-medium flex items-center gap-1">
               <Zap className="w-3.5 h-3.5 fill-current" />
               <span>{t.dashboard.xpEarned}</span>
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-amber-500 tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-amber-500 tabular-nums">
               <NumberCounter value={totalXP} />
             </div>
-            <div className="text-xs text-slate-400">+100 per completed lesson</div>
+            <div className="text-[11px] sm:text-xs text-slate-400">+100 per completed lesson</div>
           </SpotlightCard>
         </StaggerItem>
 
@@ -147,27 +147,27 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
         <StaggerItem>
           <SpotlightCard
             spotlightColor="rgba(244, 63, 94, 0.15)"
-            className="p-5 border border-rose-500/30 bg-rose-500/5 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
+            className="p-3.5 sm:p-5 border border-rose-500/30 bg-rose-500/5 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
           >
             <div className="text-xs text-rose-500 dark:text-rose-400 font-medium flex items-center gap-1">
               <Flame className="w-3.5 h-3.5 fill-current animate-bounce" />
               <span>{t.dashboard.streak}</span>
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-rose-500 tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-rose-500 tabular-nums">
               <NumberCounter value={currentStreakDays} suffix=" Days" />
             </div>
-            <div className="text-xs text-slate-400">Consistency booster</div>
+            <div className="text-[11px] sm:text-xs text-slate-400">Consistency booster</div>
           </SpotlightCard>
         </StaggerItem>
 
         {/* Metric 4: Courses Started */}
         <StaggerItem>
-          <SpotlightCard className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
+          <SpotlightCard className="p-3.5 sm:p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
             <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">Tracks Started</div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-slate-900 dark:text-white tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-slate-900 dark:text-white tabular-nums">
               <NumberCounter value={coursesStarted.length} />
             </div>
-            <div className="text-xs text-slate-400 tabular-nums">
+            <div className="text-[11px] sm:text-xs text-slate-400 tabular-nums">
               Out of {COURSES.length} tracks
             </div>
           </SpotlightCard>
@@ -177,27 +177,27 @@ export const MyLearningDashboard: React.FC<MyLearningDashboardProps> = ({
         <StaggerItem>
           <SpotlightCard
             spotlightColor="rgba(16, 185, 129, 0.15)"
-            className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
+            className="p-3.5 sm:p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full"
           >
             <div className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
               <Trophy className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Completed Tracks</span>
+              <span>Completed</span>
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-emerald-400 tabular-nums">
               <NumberCounter value={coursesCompleted.length} />
             </div>
-            <div className="text-xs text-slate-400">100% finished</div>
+            <div className="text-[11px] sm:text-xs text-slate-400">100% finished</div>
           </SpotlightCard>
         </StaggerItem>
 
         {/* Metric 6: Practice Challenges Solved */}
-        <StaggerItem className="col-span-2 lg:col-span-1">
-          <SpotlightCard className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
+        <StaggerItem className="col-span-2 sm:col-span-1 lg:col-span-1">
+          <SpotlightCard className="p-3.5 sm:p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-1.5 shadow-sm h-full">
             <div className="text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1">
               <Code2 className="w-3.5 h-3.5 text-cyan-400" />
               <span>{t.dashboard.completedChallenges}</span>
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-cyan-400 tabular-nums">
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold font-mono text-cyan-400 tabular-nums">
               <NumberCounter value={completedChallenges.length} />
             </div>
             <div className="text-xs text-slate-400">Interactive labs</div>

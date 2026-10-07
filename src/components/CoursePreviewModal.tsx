@@ -81,7 +81,7 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="course-preview-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6"
         >
           {/* Backdrop */}
           <motion.div
@@ -98,10 +98,10 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', duration: 0.4, bounce: 0.1 }}
-            className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c121e] text-slate-900 dark:text-white shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-2xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c121e] text-slate-900 dark:text-white shadow-2xl overflow-hidden z-10"
           >
             {/* Header */}
-            <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-4 bg-slate-50/70 dark:bg-slate-900/40">
+            <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-3 sm:gap-4 bg-slate-50/70 dark:bg-slate-900/40">
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0">
                   {renderCourseIcon(course.iconName, 'w-6 h-6')}

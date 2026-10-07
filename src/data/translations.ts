@@ -61,6 +61,7 @@ export interface Translations {
     continueCourse: string;
     completed: string;
     inProgress: string;
+    notStarted: string;
     saveCourse: string;
     unsaveCourse: string;
     viewCurriculum: string;
@@ -189,6 +190,7 @@ export const TRANSLATIONS: Record<AppLanguage, Translations> = {
       continueCourse: 'Continue Learning',
       completed: 'Completed',
       inProgress: 'In Progress',
+      notStarted: 'Not Started',
       saveCourse: 'Save course',
       unsaveCourse: 'Remove from saved',
       viewCurriculum: 'View Lessons',
@@ -315,6 +317,7 @@ export const TRANSLATIONS: Record<AppLanguage, Translations> = {
       continueCourse: 'Jari Rakhein',
       completed: 'Mukammal',
       inProgress: 'Jari Hai',
+      notStarted: 'Shuru Nahi Hua',
       saveCourse: 'Bookmark karein',
       unsaveCourse: 'Bookmark hatayein',
       viewCurriculum: 'Lessons Dekhein',

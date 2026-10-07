@@ -73,9 +73,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const showBanner = lastVisitedLesson && !hideContinueBanner && !bannerDismissed;
 
   return (
-    <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+    <section className="relative pt-20 sm:pt-28 pb-14 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
       {/* Subtle Floating Ambient Tech Badges in Background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden hidden sm:block">
         <FloatingElement duration={7} distance={12} delay={0.2} className="absolute top-12 left-6 md:left-24 opacity-40">
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 backdrop-blur-sm shadow-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -92,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Continue Learning Banner (Dismissible with Don't Show Again option) */}
+        {/* Continue Learning Banner */}
         <AnimatePresence>
           {showBanner && (
             <motion.div
@@ -100,7 +100,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -15, scale: 0.98 }}
               transition={{ duration: 0.25 }}
-              className="mb-8 p-4 sm:p-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md shadow-sm"
+              className="mb-6 sm:mb-8 p-4 sm:p-5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 dark:bg-cyan-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 backdrop-blur-md shadow-sm"
             >
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
@@ -126,7 +126,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="px-2.5 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">Dismiss</span>
+                  <span className="hidden sm:inline">Dismiss</span>
                 </button>
 
                 <button
@@ -139,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="px-2.5 py-2 rounded-xl text-xs text-slate-500 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors flex items-center gap-1"
                 >
                   <EyeOff className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">Don't show again</span>
+                  <span className="hidden sm:inline">Don't show again</span>
                 </button>
 
                 <MagneticButton
@@ -157,18 +157,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           )}
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
           {/* Left Column: Brand & Primary Value Proposition */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             <FadeIn direction="up" delay={0.05} distance={14}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/25 bg-cyan-500/10 text-xs sm:text-sm font-medium text-cyan-700 dark:text-cyan-300 backdrop-blur-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                 <span>{t.hero.kicker}</span>
               </div>
             </FadeIn>
 
-            <div className="space-y-3">
-              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.08] text-slate-900 dark:text-white font-display">
+            <div className="space-y-2 sm:space-y-3">
+              <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-[54px] font-extrabold tracking-tight leading-[1.1] text-slate-900 dark:text-white font-display">
                 <TextReveal
                   text={language === 'en' ? DANIYAL_IDENTITY.heroMainHeading : `${t.hero.mainHeading1} ${t.hero.mainHeading2}`}
                   highlightWords={['Daniyal', 'Grow', 'Build', 'Seekhein', 'Banayein']}
@@ -176,25 +176,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 />
               </h1>
               <FadeIn direction="up" delay={0.2} distance={16}>
-                <p className="text-lg sm:text-2xl font-semibold text-slate-700 dark:text-slate-200 tracking-tight">
+                <p className="text-base sm:text-xl md:text-2xl font-semibold text-slate-700 dark:text-slate-200 tracking-tight">
                   <ShimmerText>{t.hero.subHeading}</ShimmerText>
                 </p>
               </FadeIn>
             </div>
 
             <FadeIn direction="up" delay={0.28} distance={16}>
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl">
                 {t.hero.description}
               </p>
             </FadeIn>
 
-            {/* Primary & Secondary Action Buttons with Magnetic Feel */}
+            {/* Primary & Secondary Action Buttons */}
             <FadeIn direction="up" delay={0.36} distance={18}>
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2">
                 <MagneticButton
                   type="button"
                   onClick={onStartLearning}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-semibold text-sm whitespace-nowrap shadow-lg shadow-cyan-500/20 transition-shadow min-h-[44px]"
+                  className="w-full xs:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-400 hover:from-cyan-400 hover:to-emerald-300 text-slate-950 font-semibold text-sm whitespace-nowrap shadow-lg shadow-cyan-500/20 transition-shadow min-h-[44px]"
                 >
                   <BookOpen className="w-4 h-4" />
                   <span>{t.hero.startLearning}</span>
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <MagneticButton
                   type="button"
                   onClick={onExploreCourses}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap min-h-[44px]"
+                  className="w-full xs:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap min-h-[44px]"
                 >
                   <span>{t.hero.exploreCourses}</span>
                   <ArrowRight className="w-4 h-4 text-cyan-500 transition-transform group-hover:translate-x-1" />
@@ -213,7 +213,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   href={DANIYAL_IDENTITY.portfolioUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
                 >
                   <span>{t.hero.viewPortfolio}</span>
                   <ExternalLink className="w-3.5 h-3.5 text-cyan-500" />
@@ -224,7 +224,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit Daniyal Hayat on GitHub (DotDaniyal)"
-                  className="inline-flex items-center gap-2 px-3.5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-sm transition-all whitespace-nowrap min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-3.5 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
                 >
                   <Github className="w-4 h-4" />
                   <span>{t.hero.github}</span>
@@ -234,43 +234,43 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Clean Unboxed Platform Highlights */}
             <FadeIn direction="up" delay={0.44} distance={14}>
-              <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <div className="pt-3 sm:pt-4 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
                 <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> 10-Point Learning Architecture
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" /> 10-Point Architecture
                 </span>
                 <span aria-hidden="true">&bull;</span>
-                <span>English &amp; Roman Urdu Support</span>
+                <span>English &amp; Roman Urdu</span>
                 <span aria-hidden="true">&bull;</span>
-                <span>Interactive Practice Arena</span>
+                <span>Practice Arena</span>
                 <span aria-hidden="true">&bull;</span>
                 <span>Real GitHub Projects</span>
               </div>
             </FadeIn>
           </div>
 
-          {/* Right Column: Interactive Developer Terminal & 10-Point Preview with 3D Tilt */}
-          <div className="lg:col-span-5 min-w-0">
+          {/* Right Column: Interactive Developer Terminal & 10-Point Preview */}
+          <div className="lg:col-span-5 min-w-0 w-full">
             <FadeIn direction="left" delay={0.25} distance={30}>
               <TiltCard maxRotation={4} scaleOnHover={1.01}>
                 <div className="rounded-2xl border border-slate-700/80 bg-slate-950/95 text-slate-100 shadow-2xl shadow-cyan-950/30 backdrop-blur-md overflow-hidden ring-1 ring-white/5">
                   {/* Terminal Top Bar */}
-                  <div className="px-4 py-3 border-b border-slate-800/90 bg-slate-900/90 flex items-center justify-between gap-2">
+                  <div className="px-3.5 sm:px-4 py-3 border-b border-slate-800/90 bg-slate-900/90 flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1.5 mr-1">
                         <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                         <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                         <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                       </div>
-                      <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-                      <span className="font-mono text-xs text-slate-300 font-medium">
+                      <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                      <span className="font-mono text-xs text-slate-300 font-medium hidden sm:inline">
                         daniyal-edu-engine.ts
                       </span>
                     </div>
-                    <div className="flex items-center gap-1 bg-slate-800/90 p-0.5 rounded-lg">
+                    <div className="flex items-center gap-1 bg-slate-800/90 p-0.5 rounded-lg overflow-x-auto">
                       <button
                         type="button"
                         onClick={() => setActiveTerminalTab('code')}
-                        className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
+                        className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
                           activeTerminalTab === 'code'
                             ? 'bg-cyan-500 text-slate-950 font-semibold shadow-sm'
                             : 'text-slate-400 hover:text-slate-200'
@@ -281,7 +281,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <button
                         type="button"
                         onClick={() => setActiveTerminalTab('internals')}
-                        className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
+                        className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
                           activeTerminalTab === 'internals'
                             ? 'bg-cyan-500 text-slate-950 font-semibold shadow-sm'
                             : 'text-slate-400 hover:text-slate-200'
@@ -292,7 +292,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <button
                         type="button"
                         onClick={() => setActiveTerminalTab('romanUrdu')}
-                        className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
+                        className={`px-2 sm:px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-medium transition-colors whitespace-nowrap ${
                           activeTerminalTab === 'romanUrdu'
                             ? 'bg-cyan-500 text-slate-950 font-semibold shadow-sm'
                             : 'text-slate-400 hover:text-slate-200'
@@ -303,7 +303,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     </div>
                   </div>
 
-                  {/* Terminal Body with Animated Content Switch */}
+                  {/* Terminal Body */}
                   <div className="p-4 sm:p-5 font-mono text-xs sm:text-sm space-y-4">
                     <AnimatePresence mode="wait">
                       {activeTerminalTab === 'code' && (
@@ -314,7 +314,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.18 }}
                         >
-                          <pre className="overflow-x-auto leading-relaxed text-slate-200 font-mono">
+                          <pre className="overflow-x-auto leading-relaxed text-slate-200 font-mono text-[11px] sm:text-xs md:text-sm">
 {`type BoardState = 'IDLE' | 'SWAPPING' | 'CHECKING' | 'CLEARING';
 
 export function nextState(state: BoardState, matched: boolean): BoardState {
@@ -337,7 +337,7 @@ export function nextState(state: BoardState, matched: boolean): BoardState {
                           className="space-y-2.5 font-sans text-xs sm:text-sm text-slate-300 leading-relaxed"
                         >
                           <div className="font-semibold text-cyan-400 flex items-center gap-1.5">
-                            <Code2 className="w-4 h-4" />
+                            <Code2 className="w-4 h-4 shrink-0" />
                             <span>How It Works Under the Hood (Mystic Match Engine):</span>
                           </div>
                           <p>
@@ -351,45 +351,45 @@ export function nextState(state: BoardState, matched: boolean): BoardState {
 
                       {activeTerminalTab === 'romanUrdu' && (
                         <motion.div
-                          key="tab-roman"
+                          key="tab-roman-urdu"
                           initial={{ opacity: 0, y: 6 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -6 }}
                           transition={{ duration: 0.18 }}
-                          className="space-y-2.5 font-sans text-xs sm:text-sm text-slate-300 leading-relaxed"
+                          className="space-y-2 font-sans text-xs sm:text-sm text-slate-300 leading-relaxed"
                         >
                           <div className="font-semibold text-cyan-400">
-                            Roman Urdu Concept Intuition:
+                            Roman Urdu Mein Concept Samajhein:
                           </div>
-                          <p className="italic text-slate-200 bg-slate-900/60 p-3 rounded-lg border border-slate-800">
-                            "Jab game mein tiles drop ho rahi hon to naya touch swipe ignore karna zaroori hota hai. Finite State Machine har waqt sirf aik valid state allow karti hai taake 2D array corrupt na ho."
+                          <p>
+                            Game state machine ka matlab hai ke board ek waqt mein sirf ek state mein ho sakta hai (e.g., jab gems clear ho rahe hon to user aur click na kar sake). Is se race conditions khatam hoti hain.
                           </p>
                         </motion.div>
                       )}
                     </AnimatePresence>
 
-                    {/* Interactive Run Row */}
-                    <div className="pt-3 border-t border-slate-800/90 flex items-center justify-between gap-3">
-                      <button
-                        type="button"
-                        onClick={handleRunHeroDemo}
-                        disabled={isRunning}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-xs font-semibold transition-all border border-cyan-500/30 active:scale-95"
-                      >
-                        <Play className={`w-3.5 h-3.5 ${isRunning ? 'animate-spin' : ''}`} />
-                        <span>Run State Check</span>
-                      </button>
-                      <span className="text-[11px] text-slate-500 hidden sm:inline">
-                        Press ⌘K / Ctrl+K to search
-                      </span>
+                    {/* Interactive Live Run Simulation */}
+                    <div className="pt-3 border-t border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] text-slate-400 font-mono">
+                          Live Architecture Verification:
+                        </span>
+                        <motion.button
+                          type="button"
+                          whileHover={{ scale: 1.04 }}
+                          whileTap={{ scale: 0.96 }}
+                          onClick={handleRunHeroDemo}
+                          disabled={isRunning}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs whitespace-nowrap shadow-sm shadow-cyan-500/20 disabled:opacity-50"
+                        >
+                          <Play className="w-3 h-3 fill-current" />
+                          <span>{isRunning ? 'Running...' : 'Simulate State'}</span>
+                        </motion.button>
+                      </div>
+                      <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/80 text-[11px] text-emerald-400 font-mono overflow-x-auto whitespace-pre-wrap leading-tight">
+                        {terminalOutput}
+                      </div>
                     </div>
-
-                    <motion.div
-                      animate={{ scale: isRunning ? 0.99 : 1 }}
-                      className="p-3 rounded-lg bg-slate-900/90 border border-slate-800 text-xs font-mono text-emerald-400 whitespace-pre-wrap shadow-inner"
-                    >
-                      {terminalOutput}
-                    </motion.div>
                   </div>
                 </div>
               </TiltCard>
