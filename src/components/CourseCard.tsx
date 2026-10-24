@@ -94,12 +94,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     <SpotlightCard
       spotlightColor="rgba(6, 182, 212, 0.14)"
       borderColor="rgba(6, 182, 212, 0.3)"
-      className="group relative flex flex-col justify-between p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800/90 bg-white/95 dark:bg-[#0d1322]/95 backdrop-blur-sm hover:border-cyan-500/60 dark:hover:border-cyan-500/60 transition-all duration-200 shadow-sm hover:shadow-md"
+      className="group relative flex flex-col justify-between p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/95 dark:bg-[#0c0d14]/95 backdrop-blur-sm hover:border-cyan-500/60 dark:hover:border-cyan-400/60 transition-all duration-200 shadow-sm hover:shadow-md"
     >
       {/* Recommended Tag */}
       {isRecommended && (
         <div className="absolute -top-3 left-4 sm:left-6 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 text-slate-950 font-bold text-[10px] tracking-wide uppercase shadow-md shadow-cyan-500/20 z-10">
-          <Sparkles className="w-3 h-3 shrink-0" />
+          <Sparkles className="w-3.5 h-3.5 shrink-0" />
           <span>{t.catalog.recommendedBadge}</span>
         </div>
       )}
@@ -111,7 +111,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             <motion.div
               whileHover={{ rotate: 6, scale: 1.08 }}
               transition={{ type: 'spring', stiffness: 350, damping: 18 }}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0 shadow-sm mt-0.5"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-100 dark:bg-[#10121a] border border-slate-200 dark:border-white/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0 shadow-sm mt-0.5"
             >
               {renderCourseIcon(course.iconName, 'w-5 h-5')}
             </motion.div>
@@ -144,7 +144,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             className={`p-2 rounded-xl border text-xs font-medium transition-colors shrink-0 ${
               isFavorite
                 ? 'border-rose-500/40 bg-rose-500/10 text-rose-500'
-                : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-rose-500 hover:border-rose-500/30'
+                : 'border-slate-200 dark:border-white/10 text-slate-400 hover:text-rose-500 hover:border-rose-500/30'
             }`}
           >
             <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current text-rose-500' : ''}`} />
@@ -161,7 +161,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           {course.topics.slice(0, 3).map((topic) => (
             <span
               key={topic}
-              className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200/80 dark:border-slate-800"
+              className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-[#10121a] text-slate-600 dark:text-slate-400 border border-slate-200/80 dark:border-white/10"
             >
               {topic}
             </span>
@@ -175,7 +175,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       </div>
 
       {/* Bottom Progress Bar + Quick Preview & CTA */}
-      <div className="pt-3 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3">
+      <div className="pt-3 border-t border-slate-200/80 dark:border-white/10 space-y-3">
         {/* Progress stats */}
         <div className="space-y-1 text-xs">
           <div className="flex items-center justify-between text-slate-500 dark:text-slate-400">
@@ -215,7 +215,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
               type="button"
               onClick={() => onPreviewCourse(course)}
               aria-label={`${t.catalog.quickPreview}: ${course.name}`}
-              className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-cyan-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 shrink-0"
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#10121a] hover:text-cyan-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 shrink-0"
             >
               <Eye className="w-4 h-4" />
             </button>

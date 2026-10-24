@@ -308,7 +308,7 @@ export default function App() {
 
       {/* Course Search & Filters Bar */}
       <FadeIn direction="up" delay={0.08}>
-        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-4 shadow-sm">
+        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm space-y-4 shadow-sm">
           <div className="flex flex-col md:flex-row gap-3">
             {/* Search Input */}
             <div className="relative flex-1">
@@ -444,7 +444,7 @@ export default function App() {
       {/* Course Cards Grid or Friendly Empty State */}
       {filteredCourses.length === 0 ? (
         <FadeIn direction="up">
-          <div className="p-12 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm text-center space-y-3 shadow-md">
+          <div className="p-12 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm text-center space-y-3 shadow-md">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white font-display">
               {selectedCategory === 'Saved'
                 ? t.dashboard.noSavedCourses
@@ -499,7 +499,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] dark:bg-[#090d16] text-slate-900 dark:text-slate-100 relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] dark:bg-[#050505] text-slate-900 dark:text-slate-100 relative overflow-x-hidden">
       {/* Premium Cinematic Startup Animation */}
       {!preloaderDone && (
         <EduTechPreloader onComplete={() => setPreloaderDone(true)} />

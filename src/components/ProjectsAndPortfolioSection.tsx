@@ -57,7 +57,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
     <div className="space-y-16 py-12">
       {/* Built by Daniyal Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <FadeIn direction="up" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <FadeIn direction="up" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-xs font-semibold text-cyan-600 dark:text-cyan-400">
               <Sparkles className="w-3.5 h-3.5" />
@@ -85,7 +85,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
               href={DANIYAL_IDENTITY.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-cyan-500 text-slate-800 dark:text-slate-200 font-semibold text-xs whitespace-nowrap bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 hover:border-cyan-500 text-slate-800 dark:text-slate-200 font-semibold text-xs whitespace-nowrap bg-white/50 dark:bg-[#0c0d14]/80 backdrop-blur-sm transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               <span>GitHub (DotDaniyal)</span>
@@ -97,7 +97,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
         <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {REAL_PROJECTS.map((project) => (
             <StaggerItem key={project.id}>
-              <SpotlightCard className="flex flex-col justify-between p-6 border border-slate-200 dark:border-slate-800/90 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm hover:border-cyan-500/60 transition-all h-full">
+              <SpotlightCard className="flex flex-col justify-between p-6 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm hover:border-cyan-500/60 transition-all h-full">
                 <div>
                   <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2">
                     <span>{project.category}</span>
@@ -124,7 +124,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-800/80 mb-5">
+                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#10121a] border border-slate-200/70 dark:border-white/10 mb-5">
                     <div className="text-[11px] font-semibold text-cyan-600 dark:text-cyan-400">
                       Relevant Educational Topic
                     </div>
@@ -134,7 +134,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/80 dark:border-slate-800/80 space-y-2.5">
+                <div className="pt-4 border-t border-slate-200/80 dark:border-white/10 space-y-2.5">
                   <div className="flex items-center gap-2">
                     <a
                       href={project.githubUrl}
@@ -176,8 +176,8 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
 
       {/* Case Study Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <FadeIn direction="up" className="p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-8 shadow-xl">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-slate-800 pb-6">
+        <FadeIn direction="up" className="p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm space-y-8 shadow-xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-slate-200 dark:border-white/10 pb-6">
             <div className="space-y-2">
               <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
                 Production Case Study &bull; Real Architecture
@@ -200,7 +200,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
                   className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
                     selectedProject.id === proj.id
                       ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                      : 'border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      : 'border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {proj.name}
@@ -210,7 +210,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#10121a]/80 border border-slate-200/80 dark:border-white/10 space-y-2">
               <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 1. System Architecture
               </div>
@@ -219,7 +219,7 @@ export const ProjectsAndPortfolioSection: React.FC<ProjectsAndPortfolioSectionPr
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-2">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-[#10121a]/80 border border-slate-200/80 dark:border-white/10 space-y-2">
               <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 2. Core Logic &amp; Engineering
               </div>

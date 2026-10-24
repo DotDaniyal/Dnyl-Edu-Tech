@@ -117,8 +117,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
       className={`fixed top-0 left-0 right-0 z-40 w-full transition-colors duration-200 ${
         scrolled
-          ? 'border-b border-slate-200/90 dark:border-slate-800/90 bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-cyan-950/20'
-          : 'border-b border-slate-200/60 dark:border-slate-800/60 bg-white/85 dark:bg-[#090d16]/85 backdrop-blur-md'
+          ? 'border-b border-slate-200/90 dark:border-white/10 bg-white/95 dark:bg-[#050505]/95 backdrop-blur-xl shadow-lg shadow-black/20'
+          : 'border-b border-slate-200/60 dark:border-white/5 bg-white/85 dark:bg-[#050505]/85 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-3">
@@ -256,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-[#090d16]/98 backdrop-blur-2xl px-4 py-4 space-y-3 overflow-hidden shadow-2xl max-h-[85vh] overflow-y-auto"
+            className="lg:hidden border-t border-slate-200 dark:border-white/10 bg-white/98 dark:bg-[#050505]/98 backdrop-blur-2xl px-4 py-4 space-y-3 overflow-hidden shadow-2xl max-h-[85vh] overflow-y-auto"
           >
             <div className="grid grid-cols-2 gap-2">
               {navItems.map((item) => {

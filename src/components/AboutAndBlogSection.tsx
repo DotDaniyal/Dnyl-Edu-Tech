@@ -118,10 +118,10 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
       {mode !== 'blog-only' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn direction="up">
-            <SpotlightCard className="p-6 sm:p-10 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-xl">
+            <SpotlightCard className="p-6 sm:p-10 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-xl">
               {/* Profile Photo */}
               <div className="lg:col-span-4 flex flex-col items-center lg:items-start space-y-4">
-                <div className="relative w-44 h-52 sm:w-56 sm:h-64 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-900 shrink-0 shadow-lg">
+                <div className="relative w-44 h-52 sm:w-56 sm:h-64 rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-900 shrink-0 shadow-lg">
                   <img
                     src={DANIYAL_IDENTITY.profileImage}
                     alt="Daniyal Hayat — Founder of Daniyal Edu Tech"
@@ -191,7 +191,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-cyan-500 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap bg-white/40 dark:bg-slate-900/40"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 dark:border-white/10 hover:border-cyan-500 text-slate-900 dark:text-white font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap bg-white/40 dark:bg-[#0c0d14]/40"
                   >
                     <Github className="w-4 h-4" />
                     <span>View GitHub</span>
@@ -206,7 +206,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
       {/* Technologies I Teach & Build With */}
       {mode !== 'blog-only' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <FadeIn direction="up" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+          <FadeIn direction="up" className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
             <div className="space-y-2">
               <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
                 Verified Stack from Daniyal’s Portfolio &amp; GitHub
@@ -229,7 +229,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${
                     skillCategory === cat
                       ? 'bg-cyan-500 text-slate-950 font-semibold shadow-sm'
-                      : 'bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      : 'bg-slate-100 dark:bg-[#10121a] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {cat}
@@ -241,7 +241,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
           <StaggerContainer staggerDelay={0.06} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredSkills.map((skill) => (
               <StaggerItem key={skill.id}>
-                <SpotlightCard className="p-5 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 flex flex-col justify-between gap-4 h-full shadow-sm">
+                <SpotlightCard className="p-5 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 flex flex-col justify-between gap-4 h-full shadow-sm">
                   <div className="space-y-2">
                     <div className="text-xs text-cyan-600 dark:text-cyan-400 font-medium">
                       {skill.category}
@@ -255,7 +255,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                   </div>
 
                   {skill.relatedCourseIds[0] && (
-                    <div className="pt-3 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-xs">
+                    <div className="pt-3 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between text-xs">
                       <span className="text-slate-500">
                         {skill.relatedProjectIds.length} verified project{skill.relatedProjectIds.length === 1 ? '' : 's'}
                       </span>
@@ -291,7 +291,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
             <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {LEARNING_PRINCIPLES.map((item) => (
                 <StaggerItem key={item.number}>
-                  <SpotlightCard className="p-6 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-2.5 h-full shadow-sm">
+                  <SpotlightCard className="p-6 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 space-y-2.5 h-full shadow-sm">
                     <div className="font-mono text-sm font-bold text-cyan-600 dark:text-cyan-400">
                       {item.number} &mdash; {item.title}
                     </div>
@@ -309,7 +309,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
 
           {/* 10-Point Learning System Architecture */}
           <FadeIn direction="up">
-            <SpotlightCard className="p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-6 shadow-md">
+            <SpotlightCard className="p-6 sm:p-8 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 space-y-6 shadow-md">
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div className="space-y-1">
                   <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
@@ -338,7 +338,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                 {TEN_POINT_SYSTEM_META.map((pt) => (
                   <div
                     key={pt.step}
-                    className="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/60 space-y-1"
+                    className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#10121a]/80 space-y-1"
                   >
                     <div className="font-mono text-xs font-bold text-cyan-600 dark:text-cyan-400">
                       {pt.step} &mdash; {pt.title}
@@ -357,7 +357,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
       {/* Engineering Blog & Technical Insights Section */}
       {mode !== 'home-summary' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <FadeIn direction="up" className="space-y-2 border-b border-slate-200 dark:border-slate-800 pb-6">
+          <FadeIn direction="up" className="space-y-2 border-b border-slate-200 dark:border-white/10 pb-6">
             <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
               Engineering Notes &amp; Architecture Deep-Dives
             </div>
@@ -382,7 +382,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                     className={`w-full text-left p-5 rounded-2xl border transition-all space-y-2 ${
                       active
                         ? 'border-cyan-500 bg-cyan-500/10 dark:bg-cyan-950/25 shadow-md shadow-cyan-500/10'
-                        : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] hover:border-cyan-500/50'
+                        : 'border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c0d14] hover:border-cyan-500/50'
                     }`}
                   >
                     <div className="text-xs text-slate-500 dark:text-slate-400">
@@ -400,8 +400,8 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
             </div>
 
             {/* Active Article Reader */}
-            <article className="lg:col-span-7 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-6 shadow-lg">
-              <div className="space-y-2 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <article className="lg:col-span-7 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm space-y-6 shadow-lg">
+              <div className="space-y-2 border-b border-slate-200 dark:border-white/10 pb-4">
                 <div className="text-xs text-cyan-600 dark:text-cyan-400 font-medium">
                   {activeArticle.category} &bull; {activeArticle.publishedDate} &bull; {activeArticle.readTime}
                 </div>
@@ -437,7 +437,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                 ))}
               </div>
 
-              <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-3">
+              <div className="pt-4 border-t border-slate-200 dark:border-white/10 flex items-center justify-between flex-wrap gap-3">
                 <motion.button
                   type="button"
                   whileHover={{ scale: 1.03 }}
@@ -466,7 +466,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
       {mode === 'full' && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <FadeIn direction="up">
-            <SpotlightCard className="p-6 sm:p-8 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-3 shadow-md">
+            <SpotlightCard className="p-6 sm:p-8 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 space-y-3 shadow-md">
               <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
                 Platform Mission
               </div>
@@ -482,7 +482,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
           {/* Newsletter & Contact Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <FadeIn direction="up" delay={0.05} className="lg:col-span-5">
-              <SpotlightCard className="p-6 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 flex flex-col justify-between space-y-6 h-full shadow-md">
+              <SpotlightCard className="p-6 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 flex flex-col justify-between space-y-6 h-full shadow-md">
                 <div className="space-y-3">
                   <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
                     <Mail className="w-4 h-4" />
@@ -503,7 +503,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                       onChange={(e) => setNewsletterEmail(e.target.value)}
                       placeholder="Enter your email address..."
                       aria-label="Email address for newsletter"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#10121a] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
                     />
                     <motion.button
                       type="submit"
@@ -525,7 +525,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                   )}
                 </div>
 
-                <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 space-y-1">
+                <div className="pt-4 border-t border-slate-200 dark:border-white/10 text-xs text-slate-500 space-y-1">
                   <div>Direct Email: {DANIYAL_IDENTITY.email}</div>
                   <div>GitHub: {DANIYAL_IDENTITY.githubUrl}</div>
                 </div>
@@ -534,7 +534,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
 
             {/* Contact Form */}
             <FadeIn direction="up" delay={0.1} className="lg:col-span-7">
-              <SpotlightCard className="p-6 border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 space-y-5 h-full shadow-md">
+              <SpotlightCard className="p-6 border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 space-y-5 h-full shadow-md">
                 <div className="space-y-1">
                   <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400">
                     Direct Developer &amp; Educator Communication
@@ -553,7 +553,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                       onChange={(e) => setContactName(e.target.value)}
                       placeholder="Your Name"
                       aria-label="Your Name"
-                      className="px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+                      className="px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#10121a] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
                     />
                     <input
                       type="email"
@@ -562,7 +562,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                       onChange={(e) => setContactEmail(e.target.value)}
                       placeholder="Your Email"
                       aria-label="Your Email"
-                      className="px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+                      className="px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#10121a] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
                     />
                   </div>
 
@@ -570,7 +570,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                     value={contactTopic}
                     onChange={(e) => setContactTopic(e.target.value)}
                     aria-label="Message Topic"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#10121a] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
                   >
                     <option value="Course Question / Feedback">Course Question / Feedback</option>
                     <option value="Project Collaboration">Project Collaboration</option>
@@ -584,7 +584,7 @@ export const AboutAndBlogSection: React.FC<AboutAndBlogSectionProps> = ({
                     onChange={(e) => setContactMessage(e.target.value)}
                     placeholder="Write your question or project inquiry..."
                     aria-label="Your Message"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#10121a] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
                   />
 
                   <motion.button

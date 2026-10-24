@@ -153,11 +153,11 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ type: 'spring', stiffness: 420, damping: 30 }}
-            className="relative w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c0d14] shadow-2xl overflow-hidden z-10"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Search Bar */}
-            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-slate-800">
+            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-200 dark:border-white/10">
               <Search className="w-5 h-5 text-cyan-500 shrink-0" />
               <input
                 ref={inputRef}
@@ -188,7 +188,7 @@ export const CommandSearchModal: React.FC<CommandSearchModalProps> = ({
             </div>
 
             {/* Quick Actions Shortcuts Bar */}
-            <div className="px-4 py-2 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50/70 dark:bg-slate-900/40 flex items-center gap-2 overflow-x-auto text-xs">
+            <div className="px-4 py-2 border-b border-slate-200/80 dark:border-white/10 bg-slate-50/70 dark:bg-[#10121a]/60 flex items-center gap-2 overflow-x-auto text-xs">
               <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider shrink-0">
                 Quick Actions:
               </span>

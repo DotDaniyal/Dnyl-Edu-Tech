@@ -101,7 +101,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
               ease: [0.19, 1, 0.22, 1], // Smooth cinematic slide-up exit
             },
           }}
-          className="fixed inset-0 z-[999999] bg-[#07090e] flex flex-col items-center justify-center select-none overflow-hidden"
+          className="fixed inset-0 z-[999999] bg-[#050505] flex flex-col items-center justify-center select-none overflow-hidden"
           style={{ willChange: 'transform, opacity, filter' }}
         >
           {/* Background Matrix Grid */}
@@ -170,7 +170,7 @@ export const EduTechPreloader: React.FC<EduTechPreloaderProps> = ({ onComplete }
                   y: 0,
                 }}
                 transition={{ duration: 1.1, ease: [0.19, 1, 0.22, 1] }}
-                className="relative w-22 h-22 sm:w-24 sm:h-24 rounded-2xl bg-slate-900/95 border-2 border-cyan-500/60 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/35 backdrop-blur-xl ring-1 ring-white/20"
+                className="relative w-22 h-22 sm:w-24 sm:h-24 rounded-2xl bg-[#0c0d14]/95 border-2 border-cyan-500/60 flex flex-col items-center justify-center shadow-2xl shadow-cyan-500/35 backdrop-blur-xl ring-1 ring-white/20"
               >
                 <div className="font-mono text-3xl sm:text-4xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400">
                   &lt;/&gt;

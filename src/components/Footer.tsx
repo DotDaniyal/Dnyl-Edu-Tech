@@ -33,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en', onR
   };
 
   return (
-    <footer className="relative z-10 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#090d16]">
+    <footer className="relative z-10 border-t border-slate-200 dark:border-white/10 bg-white dark:bg-[#050505]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5">
@@ -90,23 +90,23 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, language = 'en', onR
           </div>
         </div>
 
-        <div className="pt-6 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+        <div className="pt-6 border-t border-slate-200/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
           <div>&copy; {new Date().getFullYear()} Daniyal Edu Tech. {t.footer.rights}</div>
           <div className="flex items-center gap-3">
             <a
               href={DANIYAL_IDENTITY.portfolioUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-500 transition-colors"
+              className="hover:text-cyan-500 transition-colors font-mono"
             >
-              daniyal-hayat-portfolio.vercel.app
+              dnyl.vercel.app
             </a>
             <span aria-hidden="true">&bull;</span>
             <a
               href={DANIYAL_IDENTITY.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-cyan-500 transition-colors"
+              className="hover:text-cyan-500 transition-colors font-mono"
             >
               github.com/DotDaniyal
             </a>

@@ -15,7 +15,7 @@ export const DANIYAL_IDENTITY = {
     'Through hands-on engineering across React, Next.js, TypeScript, Tailwind CSS, Kotlin, Node.js, and the Google Gemini AI SDK, Daniyal builds digital systems that prioritize clean architecture, offline resilience, type safety, and responsive user experience.',
     'Daniyal Edu Tech brings this real-world engineering workflow into an interactive educational environment — combining a structured 10-Point Learning System, clear English and Roman Urdu explanations, live coding sandboxes, and architectural breakdowns of real production repositories.'
   ],
-  portfolioUrl: 'https://daniyal-hayat-portfolio.vercel.app/',
+  portfolioUrl: 'https://dnyl.vercel.app/',
   githubUrl: 'https://github.com/DotDaniyal',
   githubUsername: 'DotDaniyal',
   email: 'mdaniyalhayyat@gmail.com',
@@ -314,7 +314,7 @@ export const REAL_PROJECTS: RealProject[] = [
     language: 'TypeScript',
     technologies: ['TypeScript', 'React', 'Google Gemini AI SDK', 'Tailwind CSS', 'Vite', 'Motion'],
     githubUrl: 'https://github.com/DotDaniyal/cortexiq-by-dnyl',
-    liveUrl: 'https://daniyal-hayat-portfolio.vercel.app/',
+    liveUrl: 'https://dnyl.vercel.app/',
     relatedCourseIds: ['course-ai-engineering', 'course-typescript', 'course-react'],
     relatedTopic: 'Type-Safe AI SDK Integration, Reactive Dashboards & Server-Side Key Protection',
     learnBreakdown: {
@@ -422,7 +422,7 @@ export const REAL_PROJECTS: RealProject[] = [
     language: 'TypeScript',
     technologies: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Motion', 'GitHub REST API', 'Vite'],
     githubUrl: 'https://github.com/DotDaniyal/Daniyal-Hayat-Portfolio',
-    liveUrl: 'https://daniyal-hayat-portfolio.vercel.app/',
+    liveUrl: 'https://dnyl.vercel.app/',
     relatedCourseIds: ['course-react', 'course-typescript', 'course-git-deployment'],
     relatedTopic: 'Live GitHub API Synchronization with Resilient Local Fallback & Dual-Theme Systems',
     learnBreakdown: {

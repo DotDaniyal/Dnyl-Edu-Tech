@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   const showBanner = lastVisitedLesson && !hideContinueBanner && !bannerDismissed;
 
   return (
-    <section className="relative pt-20 sm:pt-28 pb-14 sm:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 overflow-hidden">
+    <section className="relative pt-20 sm:pt-28 pb-14 sm:pb-24 border-b border-slate-200/80 dark:border-white/10 overflow-hidden">
       {/* Subtle Floating Ambient Tech Badges in Background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden hidden sm:block">
         <FloatingElement duration={7} distance={12} delay={0.2} className="absolute top-12 left-6 md:left-24 opacity-40">
@@ -203,7 +203,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <MagneticButton
                   type="button"
                   onClick={onExploreCourses}
-                  className="w-full xs:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap min-h-[44px]"
+                  className="w-full xs:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/90 backdrop-blur-sm hover:border-cyan-500/60 text-slate-900 dark:text-slate-100 font-semibold text-sm whitespace-nowrap min-h-[44px]"
                 >
                   <span>{t.hero.exploreCourses}</span>
                   <ArrowRight className="w-4 h-4 text-cyan-500 transition-transform group-hover:translate-x-1" />
@@ -213,7 +213,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   href={DANIYAL_IDENTITY.portfolioUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-[#0c0d14]/60 hover:bg-slate-100 dark:hover:bg-[#10121c] text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
                 >
                   <span>{t.hero.viewPortfolio}</span>
                   <ExternalLink className="w-3.5 h-3.5 text-cyan-500" />
@@ -224,7 +224,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit Daniyal Hayat on GitHub (DotDaniyal)"
-                  className="inline-flex items-center justify-center gap-2 px-3.5 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-slate-900/40 hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
+                  className="inline-flex items-center justify-center gap-2 px-3.5 py-2.5 sm:py-3 rounded-xl border border-slate-200 dark:border-white/10 hover:border-cyan-500/40 bg-slate-100/60 dark:bg-[#0c0d14]/60 hover:bg-slate-100 dark:hover:bg-[#10121c] text-slate-700 dark:text-slate-300 font-medium text-xs sm:text-sm transition-all whitespace-nowrap min-h-[40px] sm:min-h-[44px]"
                 >
                   <Github className="w-4 h-4" />
                   <span>{t.hero.github}</span>
@@ -234,7 +234,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Clean Unboxed Platform Highlights */}
             <FadeIn direction="up" delay={0.44} distance={14}>
-              <div className="pt-3 sm:pt-4 border-t border-slate-200/80 dark:border-slate-800/80 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+              <div className="pt-3 sm:pt-4 border-t border-slate-200/80 dark:border-white/10 flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
                 <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
                   <CheckCircle2 className="w-3.5 h-3.5 shrink-0" /> 10-Point Architecture
                 </span>
@@ -252,9 +252,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div className="lg:col-span-5 min-w-0 w-full">
             <FadeIn direction="left" delay={0.25} distance={30}>
               <TiltCard maxRotation={4} scaleOnHover={1.01}>
-                <div className="rounded-2xl border border-slate-700/80 bg-slate-950/95 text-slate-100 shadow-2xl shadow-cyan-950/30 backdrop-blur-md overflow-hidden ring-1 ring-white/5">
+                <div className="rounded-2xl border border-slate-700/60 dark:border-white/10 bg-[#090b10]/95 text-slate-100 shadow-2xl shadow-cyan-950/30 backdrop-blur-md overflow-hidden ring-1 ring-white/5">
                   {/* Terminal Top Bar */}
-                  <div className="px-3.5 sm:px-4 py-3 border-b border-slate-800/90 bg-slate-900/90 flex flex-wrap items-center justify-between gap-2">
+                  <div className="px-3.5 sm:px-4 py-3 border-b border-slate-800/90 dark:border-white/5 bg-[#0e1017]/90 flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1.5 mr-1">
                         <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />

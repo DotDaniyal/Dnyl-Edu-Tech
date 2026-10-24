@@ -98,10 +98,10 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ type: 'spring', duration: 0.4, bounce: 0.1 }}
-            className="relative w-full max-w-2xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0c121e] text-slate-900 dark:text-white shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-2xl max-h-[90vh] sm:max-h-[88vh] flex flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c0d14] text-slate-900 dark:text-white shadow-2xl overflow-hidden z-10"
           >
             {/* Header */}
-            <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex items-start justify-between gap-3 sm:gap-4 bg-slate-50/70 dark:bg-slate-900/40">
+            <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-white/10 flex items-start justify-between gap-3 sm:gap-4 bg-slate-50/70 dark:bg-[#10121a]/60">
               <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400 shrink-0">
                   {renderCourseIcon(course.iconName, 'w-6 h-6')}
@@ -134,7 +134,7 @@ export const CoursePreviewModal: React.FC<CoursePreviewModalProps> = ({
                   className={`p-2 rounded-xl border text-xs font-medium transition-colors ${
                     isFavorite
                       ? 'border-rose-500/40 bg-rose-500/10 text-rose-500'
-                      : 'border-slate-200 dark:border-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                      : 'border-slate-200 dark:border-white/10 text-slate-500 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
