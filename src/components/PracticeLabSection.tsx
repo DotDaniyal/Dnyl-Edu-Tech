@@ -78,7 +78,7 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
   };
 
   return (
-    <section className="p-6 rounded-2xl border border-cyan-500/40 bg-white dark:bg-[#0d1322] space-y-6">
+    <section className="p-6 rounded-2xl border border-cyan-500/40 bg-white dark:bg-[#0c0d14]/95 space-y-6 shadow-sm">
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <h2 className="text-xl font-bold text-slate-900 dark:text-white font-display">
           10. Hands-On Practice &amp; Challenge Lab
@@ -117,7 +117,7 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
                     ? isCorrect
                       ? 'border-emerald-500 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-semibold'
                       : 'border-rose-500 bg-rose-500/10 text-rose-700 dark:text-rose-300 font-semibold'
-                    : 'border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 text-slate-700 dark:text-slate-300'
+                    : 'border-slate-200 dark:border-white/10 hover:border-cyan-500/50 text-slate-700 dark:text-slate-300 dark:bg-[#10121a]'
                 }`}
               >
                 {option}
@@ -140,7 +140,7 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
       </div>
 
       {/* Part B: Short Answer */}
-      <div className="pt-5 border-t border-slate-200 dark:border-slate-800 space-y-3">
+      <div className="pt-5 border-t border-slate-200 dark:border-white/10 space-y-3">
         <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
           <ListChecks className="w-4 h-4" />
           <span>Part B · Short Answer Reflection</span>
@@ -154,18 +154,18 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
             value={shortAnswerInput}
             onChange={(e) => setShortAnswerInput(e.target.value)}
             placeholder="Write a brief 1-sentence technical explanation..."
-            className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
+            className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#090b10] text-sm text-slate-900 dark:text-slate-100 focus:outline-none focus:border-cyan-500"
           />
           <button
             type="button"
             onClick={() => setShortAnswerChecked(true)}
-            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold whitespace-nowrap"
+            className="px-4 py-2 rounded-xl bg-slate-900 dark:bg-white/10 hover:bg-slate-700 dark:hover:bg-white/15 text-white text-xs font-semibold whitespace-nowrap"
           >
             Compare Answer
           </button>
         </div>
         {shortAnswerChecked && (
-          <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+          <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-[#10121a] border border-slate-200/60 dark:border-white/10 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
             <span className="font-semibold text-cyan-600 dark:text-cyan-400">
               Reference Answer:{' '}
             </span>
@@ -175,7 +175,7 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
       </div>
 
       {/* Part C: Interactive Coding Challenge */}
-      <div className="pt-5 border-t border-slate-200 dark:border-slate-800 space-y-3">
+      <div className="pt-5 border-t border-slate-200 dark:border-white/10 space-y-3">
         <div className="flex items-center justify-between gap-2 flex-wrap">
           <div className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 flex items-center gap-1.5">
             <Code2 className="w-4 h-4" />
@@ -213,14 +213,14 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
           rows={7}
           spellCheck={false}
           aria-label="Coding challenge editor"
-          className="w-full p-4 rounded-xl border border-slate-800 bg-slate-950 text-slate-100 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none focus:border-cyan-500"
+          className="w-full p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-950 dark:bg-[#090b10] text-slate-100 font-mono text-xs sm:text-sm leading-relaxed focus:outline-none focus:border-cyan-500"
         />
 
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <button
             type="button"
             onClick={handleRunChallenge}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold text-xs sm:text-sm transition-colors whitespace-nowrap shadow-md shadow-cyan-500/20"
           >
             <Play className="w-4 h-4" />
             <span>Run &amp; Verify Code</span>
@@ -248,11 +248,11 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
         )}
 
         {showSolution && (
-          <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-slate-900 space-y-2 text-xs">
+          <div className="p-3.5 rounded-xl bg-slate-100 dark:bg-[#10121a] border border-slate-200 dark:border-white/10 space-y-2 text-xs">
             <div className="font-semibold text-slate-800 dark:text-slate-200">
               Hint: {practice.codingChallenge.hint}
             </div>
-            <pre className="p-3 rounded-lg bg-slate-950 text-cyan-300 font-mono overflow-x-auto">
+            <pre className="p-3 rounded-lg bg-slate-950 dark:bg-[#090b10] text-cyan-300 font-mono overflow-x-auto border border-white/5">
               {practice.codingChallenge.solutionCode}
             </pre>
           </div>
@@ -260,14 +260,14 @@ export const PracticeLabSection: React.FC<PracticeLabSectionProps> = ({
       </div>
 
       {/* Mini Task & Concept Check */}
-      <div className="pt-5 border-t border-slate-200 dark:border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
-        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 space-y-1">
+      <div className="pt-5 border-t border-slate-200 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#10121a] border border-slate-200/50 dark:border-white/5 space-y-1">
           <div className="font-semibold text-slate-900 dark:text-white">
             Mini Engineering Task
           </div>
           <p className="text-slate-600 dark:text-slate-300">{practice.miniTask}</p>
         </div>
-        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 space-y-1">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#10121a] border border-slate-200/50 dark:border-white/5 space-y-1">
           <div className="font-semibold text-slate-900 dark:text-white">
             Concept Check Summary
           </div>

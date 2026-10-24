@@ -83,7 +83,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
       <ScrollProgress />
 
       {/* Top Breadcrumb & Course Actions */}
-      <FadeIn direction="down" duration={0.3} className="pb-6 mb-6 border-b border-slate-200 dark:border-slate-800">
+      <FadeIn direction="down" duration={0.3} className="pb-6 mb-6 border-b border-slate-200 dark:border-white/10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1 min-w-0">
             <nav
@@ -122,7 +122,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors whitespace-nowrap ${
                 showRomanUrdu
                   ? 'border-cyan-500/50 bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                  : 'border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Languages className="w-3.5 h-3.5" />
@@ -143,7 +143,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors whitespace-nowrap ${
                 isBookmarked
                   ? 'border-amber-500/50 bg-amber-500/10 text-amber-600 dark:text-amber-300 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                  : 'border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-current' : ''}`} />
@@ -166,7 +166,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors whitespace-nowrap ${
                 isFavoriteCourse
                   ? 'border-rose-500/50 bg-rose-500/10 text-rose-600 dark:text-rose-400 shadow-sm'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400'
+                  : 'border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400'
               }`}
             >
               <Heart className={`w-3.5 h-3.5 ${isFavoriteCourse ? 'fill-current' : ''}`} />
@@ -182,7 +182,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
           type="button"
           onClick={() => setMobileLessonDrawerOpen((prev) => !prev)}
           aria-expanded={mobileLessonDrawerOpen}
-          className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] flex items-center justify-between text-sm font-semibold text-slate-900 dark:text-white"
+          className="w-full p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c0d14]/95 shadow-sm flex items-center justify-between text-sm font-semibold text-slate-900 dark:text-white"
         >
           <span>
             Curriculum ({completedInCourseCount}/{course.lessons.length} completed)
@@ -201,7 +201,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-2 p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0d1322] space-y-1.5 overflow-hidden"
+              className="mt-2 p-3 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0c0d14] space-y-1.5 overflow-hidden"
             >
               {course.lessons.map((item) => {
                 const active = item.id === lesson.id;
@@ -214,7 +214,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                     className={`w-full text-left px-3 py-2.5 rounded-lg flex items-center justify-between gap-2 text-xs font-medium ${
                       active
                         ? 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-semibold'
-                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                     }`}
                   >
                     <span className="truncate">
@@ -236,7 +236,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
       {/* Desktop Two-Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[290px_minmax(0,1fr)] gap-8 items-start">
         {/* Left Sidebar */}
-        <aside className="hidden lg:block sticky top-24 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-5 shadow-sm">
+        <aside className="hidden lg:block sticky top-24 p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-5 shadow-sm">
           <div>
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1 font-medium">
               {course.category} &bull; {course.difficulty}
@@ -249,14 +249,14 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
             </p>
           </div>
 
-          <div className="space-y-1.5 pt-3 border-t border-slate-200 dark:border-slate-800">
+          <div className="space-y-1.5 pt-3 border-t border-slate-200 dark:border-white/10">
             <div className="flex items-center justify-between text-xs">
               <span className="text-slate-500 dark:text-slate-400">Course Progress</span>
               <span className="font-mono font-semibold text-cyan-600 dark:text-cyan-400 tabular-nums">
                 {courseProgressPercent}%
               </span>
             </div>
-            <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+            <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-white/10 overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${courseProgressPercent}%` }}
@@ -281,7 +281,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                   className={`w-full text-left p-2.5 rounded-xl flex items-start justify-between gap-2.5 text-xs transition-all ${
                     active
                       ? 'bg-cyan-500/15 text-cyan-600 dark:text-cyan-300 font-semibold border border-cyan-500/30 shadow-sm'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-900'
+                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5'
                   }`}
                 >
                   <div className="min-w-0">
@@ -305,7 +305,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
         <div className="min-w-0 space-y-8">
           {/* Header Summary & Completion Action */}
           <FadeIn direction="up" delay={0.05}>
-            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
               <div className="space-y-1">
                 <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
                   <Sparkles className="w-3.5 h-3.5 text-cyan-500" />
@@ -341,7 +341,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* 01 & 02 */}
           <FadeIn direction="up" delay={0.08}>
-            <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-6 shadow-sm">
+            <section className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-6 shadow-sm">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">
                   01. Definition &mdash; What is it?
@@ -351,7 +351,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                 </p>
               </div>
 
-              <div className="pt-5 border-t border-slate-200/80 dark:border-slate-800/80">
+              <div className="pt-5 border-t border-slate-200/80 dark:border-white/10">
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2 font-display">
                   02. Simple Explanation
                 </h2>
@@ -384,7 +384,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* 03 */}
           <FadeIn direction="up" delay={0.1}>
-            <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-3 shadow-sm">
+            <section className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-3 shadow-sm">
               <h2 className="text-lg font-bold text-slate-900 dark:text-white font-display">
                 03. Real-World Analogy &mdash; {tp.realWorldAnalogy.title}
               </h2>
@@ -399,7 +399,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* 04 & 05 */}
           <FadeIn direction="up" delay={0.12}>
-            <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-6 shadow-sm">
+            <section className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-6 shadow-sm">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1 font-display">
                   04. Syntax Reference
@@ -415,7 +415,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                 />
               </div>
 
-              <div className="pt-5 border-t border-slate-200/80 dark:border-slate-800/80">
+              <div className="pt-5 border-t border-slate-200/80 dark:border-white/10">
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-1 font-display">
                   05. Practical Code Example &mdash; {tp.codeExample.title}
                 </h2>
@@ -433,12 +433,12 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* 06 & 07 */}
           <FadeIn direction="up" delay={0.14}>
-            <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-6 shadow-sm">
+            <section className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-6 shadow-sm">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 font-display">
                   06. Line-by-Line Breakdown
                 </h2>
-                <div className="divide-y divide-slate-200 dark:divide-slate-800">
+                <div className="divide-y divide-slate-200 dark:divide-white/10">
                   {tp.lineByLine.map((item, idx) => (
                     <div key={idx} className="py-3.5 first:pt-0 last:pb-0 space-y-1.5">
                       <div className="flex items-center gap-2 text-xs font-mono text-cyan-600 dark:text-cyan-400">
@@ -461,7 +461,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                 </div>
               </div>
 
-              <div className="pt-5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3">
+              <div className="pt-5 border-t border-slate-200/80 dark:border-white/10 space-y-3">
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white font-display">
                   07. How It Works Behind the Scenes
                 </h2>
@@ -481,7 +481,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* 08 & 09 */}
           <FadeIn direction="up" delay={0.16}>
-            <section className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm space-y-6 shadow-sm">
+            <section className="p-6 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm space-y-6 shadow-sm">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 font-display">
                   08. Common Mistakes Beginners Make
@@ -490,7 +490,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                   {tp.commonMistakes.map((mistake, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-3"
+                      className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/60 dark:bg-[#10121a] space-y-3"
                     >
                       <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                         {mistake.title}
@@ -517,7 +517,7 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
                 </div>
               </div>
 
-              <div className="pt-5 border-t border-slate-200/80 dark:border-slate-800/80 space-y-3">
+              <div className="pt-5 border-t border-slate-200/80 dark:border-white/10 space-y-3">
                 <h2 className="text-lg font-bold text-slate-900 dark:text-white font-display">
                   09. Practical Real-Project Example
                 </h2>
@@ -550,14 +550,14 @@ export const LessonViewer: React.FC<LessonViewerProps> = ({
 
           {/* Bottom Lesson Navigation */}
           <FadeIn direction="up" delay={0.2}>
-            <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#0d1322]/90 backdrop-blur-sm flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+            <div className="p-5 rounded-2xl border border-slate-200 dark:border-white/10 bg-white/90 dark:bg-[#0c0d14]/95 backdrop-blur-sm flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
               {prevLesson ? (
                 <motion.button
                   type="button"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSelectLesson(prevLesson.id)}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 hover:border-cyan-500/50 text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 whitespace-nowrap"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Prev: 0{prevLesson.number}. {prevLesson.title}</span>

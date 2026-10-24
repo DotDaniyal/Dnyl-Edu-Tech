@@ -67,9 +67,9 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   };
 
   return (
-    <div className="my-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-950 text-slate-100 overflow-hidden">
+    <div className="my-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-950 dark:bg-[#090b10] text-slate-100 overflow-hidden">
       {/* Header Bar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-800/80 bg-slate-900/90 text-xs">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200/60 dark:border-white/10 bg-slate-900/90 dark:bg-[#0e1017] text-xs">
         <div className="flex items-center gap-2 min-w-0">
           <Terminal className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
           {title && <span className="font-medium text-slate-200 truncate">{title}</span>}
@@ -94,7 +94,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
             <button
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-800 dark:hover:bg-white/10 transition-colors whitespace-nowrap"
               aria-label={expanded ? 'Collapse code' : 'Expand code'}
             >
               {expanded ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
@@ -104,7 +104,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors font-medium whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800 dark:bg-white/10 hover:bg-slate-700 dark:hover:bg-white/15 text-slate-200 transition-colors font-medium whitespace-nowrap"
             aria-label="Copy code to clipboard"
           >
             {copied ? (
@@ -127,7 +127,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         <table className="w-full border-collapse">
           <tbody>
             {visibleLines.map((line, i) => (
-              <tr key={i} className="hover:bg-slate-900/50">
+              <tr key={i} className="hover:bg-white/5">
                 <td className="select-none pr-4 text-right text-slate-600 w-8 tabular-nums align-top">
                   {i + 1}
                 </td>
@@ -141,7 +141,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
       </div>
 
       {!expanded && isLong && (
-        <div className="px-4 py-2 bg-slate-900/60 border-t border-slate-800/80 text-center">
+        <div className="px-4 py-2 bg-slate-900/60 dark:bg-[#0e1017]/80 border-t border-slate-200/60 dark:border-white/10 text-center">
           <button
             type="button"
             onClick={() => setExpanded(true)}
@@ -154,7 +154,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
 
       {/* Console Output Drawer */}
       {(output || expectedOutput) && (
-        <div className="px-4 py-2.5 bg-slate-900/95 border-t border-slate-800 text-xs font-mono">
+        <div className="px-4 py-2.5 bg-slate-900/95 dark:bg-[#0e1017] border-t border-slate-200/60 dark:border-white/10 text-xs font-mono">
           <div className="flex items-center justify-between text-slate-400 mb-1">
             <span>Console Output</span>
             {output && (
